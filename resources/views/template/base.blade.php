@@ -28,7 +28,8 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   {{--  Libreria que nos permite realizar Notiticaciones  --}}
   <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
-  {{--  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">  --}}
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.css') }}">
   <!-- CSC propio de la pagina -->
   <link rel="stylesheet" href="{{ asset('css/page.css') }}">
 </head>
@@ -110,34 +111,21 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+          <li class="nav-item">
+            <a href="{{ url('area/buscar') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
               <p>
-                Areas/ Cargos
-                <i class="right fas fa-angle-left"></i>
+                Areas & Cargos
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Areas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cargos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Horas</p>
-                </a>
-              </li>
-            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('nivel/buscar') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Niveles
+              </p>
+            </a>
           </li>
           <li class="nav-header">REQUERIMIENTOS</li>
           <li class="nav-item">
@@ -244,7 +232,9 @@
 <script src="{{ asset('js/demo.js') }}"></script>
 {{--  Libreria que nos permite realizar Notiticaciones  --}}
 <script src="{{ asset('js/toastr.js') }}"></script>
-{{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>  --}}
+<!-- DataTables -->
+<script src="{{ asset('js/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.js') }}"></script>
 
 @toastr_render
 <script>

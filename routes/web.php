@@ -88,3 +88,38 @@ Route::group(['prefix' => 'documento'], function(){
     Route::get('confirma/{id}', 'documentoController@confirm');
     Route::post('eliminar', 'documentoController@destroy');
 });
+
+// Rutas AREAS
+Route::group(['prefix' => 'area'], function(){
+    Route::get('buscar', 'areaController@index');
+    Route::post('buscar', 'areaController@show');
+    Route::get('nuevo', 'areaController@create');
+    Route::post('nuevo', 'areaController@store');
+    Route::get('editar/{id}', 'areaController@edit');
+    Route::post('actualizar', 'areaController@update');
+    Route::get('confirma/{id}', 'areaController@confirm');
+    Route::post('eliminar', 'areaController@destroy');
+});
+
+// Rutas CARGOS
+Route::group(['prefix' => 'cargo'], function(){
+    Route::get('buscar/{id}', 'cargoController@index');
+    Route::get('nuevo/{id}', 'cargoController@create');
+    Route::post('nuevo', 'cargoController@store');
+    Route::get('editar/{id}/{ie}', 'cargoController@edit');
+    Route::post('actualizar', 'cargoController@update');
+    Route::get('confirma/{id}/{ie}', 'cargoController@confirm');
+    Route::post('eliminar', 'cargoController@destroy');
+});
+
+// Rutas NIVELES
+Route::group(['prefix' => 'nivel'], function(){
+    Route::get('buscar', 'nivelController@index');
+    Route::post('buscar', 'nivelController@show');
+    Route::get('nuevo', 'nivelController@create');
+    Route::post('nuevo', 'nivelController@store');
+    Route::get('editar/{id}', 'nivelController@edit');
+    Route::post('actualizar', 'nivelController@update');
+    Route::get('confirma/{id}', 'nivelController@confirm');
+    Route::post('eliminar', 'nivelController@destroy');
+});

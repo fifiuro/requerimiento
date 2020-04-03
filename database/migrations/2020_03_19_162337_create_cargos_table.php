@@ -20,9 +20,6 @@ class CreateCargosTable extends Migration
             $table->foreign('id_are')->references('id_are')->on('areas');
 
             $table->string('cargo');
-            $table->integer('nivel');
-            $table->integer('salario');
-            $table->string('literal');
             $table->boolean('estado');
             $table->timestamps();
         });

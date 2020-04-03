@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHorasTable extends Migration
+class CreateNivelesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateHorasTable extends Migration
      */
     public function up()
     {
-        Schema::create('horas', function (Blueprint $table) {
-            $table->bigIncrements('id_hrs');
+        Schema::create('niveles', function (Blueprint $table) {
+            $table->bigIncrements('id_niv');
             // LLAVE FORANEA A LA TABLA AREAS
             $table->unsignedBigInteger('id_are');
             $table->foreign('id_are')->references('id_are')->on('areas');
@@ -22,6 +22,8 @@ class CreateHorasTable extends Migration
             $table->string('nivel');
             $table->integer('horas');
             $table->string('tiempo');
+            $table->integer('salario');
+            $table->string('literal');
             $table->boolean('estado');
             $table->timestamps();
         });
@@ -34,6 +36,6 @@ class CreateHorasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('horas');
+        Schema::dropIfExists('niveles');
     }
 }
