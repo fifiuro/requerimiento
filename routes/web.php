@@ -123,3 +123,15 @@ Route::group(['prefix' => 'nivel'], function(){
     Route::get('confirma/{id}', 'nivelController@confirm');
     Route::post('eliminar', 'nivelController@destroy');
 });
+
+// Rutas DATOS PERSONALES
+Route::group(['prefix' => 'personal'], function(){
+    Route::get('buscar', 'datoPersonalController@index');
+    Route::post('buscar', 'datoPersonalController@show');
+    Route::get('nuevo', 'datoPersonalController@create');
+    Route::post('nuevo', 'datoPersonalController@store');
+    Route::get('editar/{id}', 'datoPersonalController@edit');
+    Route::post('actualizar', 'datoPersonalController@update');
+    Route::get('confirma/{id}', 'datoPersonalController@confirm');
+    Route::post('eliminar', 'datoPersonalController@destroy');
+});
