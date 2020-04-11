@@ -129,7 +129,7 @@
           </li>
           <li class="nav-header">REQUERIMIENTOS</li>
           <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+            <a href="{{ url('personal/buscar') }}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Datos Personales
