@@ -120,7 +120,6 @@
                             @endif
                         </div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="email">Correo Electrónico *</label>
                         <input type="text" name="email" class="form-control" id="email" placeholder="Escriba Correo Electrónico" value="{{ old('email') }}" maxlength="100" required>

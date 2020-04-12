@@ -135,3 +135,15 @@ Route::group(['prefix' => 'personal'], function(){
     Route::get('confirma/{id}', 'datoPersonalController@confirm');
     Route::post('eliminar', 'datoPersonalController@destroy');
 });
+
+// Rutas REQUERIMIENTO
+Route::group(['prefix' => 'requerimiento'], function(){
+    /* Route::get('buscar', 'requerimientoController@index');
+    Route::post('buscar', 'requerimientoController@show'); */
+    Route::get('nuevo', 'requerimientoController@create');
+    Route::post('nuevo', 'requerimientoController@store');
+    Route::get('editar/{id}', 'requerimientoController@edit');
+    Route::post('actualizar', 'requerimientoController@update');
+    Route::get('confirma/{id}', 'requerimientoController@confirm');
+    Route::post('eliminar', 'requerimientoController@destroy');
+});
