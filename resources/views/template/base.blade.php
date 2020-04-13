@@ -129,7 +129,7 @@
           </li>
           <li class="nav-header">REQUERIMIENTOS</li>
           <li class="nav-item">
-            <a href="{{ url('requerimiento/nuevo') }}" class="nav-link">
+            <a href="{{ url('personal/buscar') }}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Datos Personales
@@ -137,7 +137,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
+            <a href="{{ url('requerimiento/nuevo') }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
                 Nuevo Requrimiento
