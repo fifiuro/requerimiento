@@ -140,7 +140,7 @@
             <a href="{{ url('requerimiento/nuevo') }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
-                Nuevo Requrimiento
+                Requerimiento
               </p>
             </a>
           </li>

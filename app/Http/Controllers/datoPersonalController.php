@@ -33,9 +33,13 @@ class datoPersonalController extends Controller
         $find = DatoPersonal::where(DB::raw('concat(datos_personales.nombre," ",datos_personales.paterno," ",datos_personales.materno)'), 'like', '%'.$request->nombre.'%')->get();
 
         if(!is_null($find)){
-            return view('datoPersonal.buscar')->with('find', $find)
-                                            ->with('estado', '1')
-                                            ->with('mensaje', '');
+            if($request->data == '1'){
+                return $find->toJson();
+            }else{
+                return view('datoPersonal.buscar')->with('find', $find)
+                                                  ->with('estado', '1')
+                                                  ->with('mensaje', '');
+            }
         }else{
             return view('datoPersonal.buscar')->with('find', $find)
                                             ->with('estado', '0')
