@@ -32,6 +32,8 @@
   <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.css') }}">
   <!-- CSC propio de la pagina -->
   <link rel="stylesheet" href="{{ asset('css/page.css') }}">
+  {{-- Tipo de Letra --}}
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -52,7 +54,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="{{ asset('images/img/LogoLight.png') }}" alt="Caja Nacional de Salud" class="brand-image img-circle elevation-3">
-      <span class="brand-text font-weight-light">Caja Nacional de Salud</span>
+      <span class="brand-text font-weight-light">C.N.S.</span>
     </a>
 
     <!-- Sidebar -->
