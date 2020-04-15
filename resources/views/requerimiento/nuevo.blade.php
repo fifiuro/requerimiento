@@ -150,16 +150,35 @@
                                             </div>
                                             <input type="text" class="form-control float-right" id="duracion">
                                         </div>
-                                        <input type="date" name="fecha_inicio" id="fecha_inicio" required>
-                                        <input type="date" name="fecha_fin" id="fecha_fin" required>
+                                        <input type="hidden" name="fecha_inicio" id="fecha_inicio" required>
+                                        <input type="hidden" name="fecha_fin" id="fecha_fin" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
-                                AQUI EL REGISTRO DE NOTA DE REQUERIMIENTO
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="nota_requerimiento">Nota de Requerimiento *</label>
+                                        <input type="text" name="nota_requerimiento" id="nota_requerimiento" class="form-control" required>
+                                        @if ($errors->has('nota_requerimiento'))
+                                            <small class="form-text text-danger">
+                                                {{ $errors->first('nota_requerimiento') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fecha_nota_requerimiento">Nota de Requerimiento *</label>
+                                        <input type="date" name="fecha_nota_requerimiento" id="fecha_nota_requerimiento" class="form-control" required>
+                                        @if ($errors->has('fecha_nota_requerimiento'))
+                                            <small class="form-text text-danger">
+                                                {{ $errors->first('fecha_nota_requerimiento') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="vert-tabs-settings" role="tabpanel" aria-labelledby="vert-tabs-settings-tab">
-                                DOCUMENTOS PRESENTADOS
+                                
                                 <button type="submit" class="btn btn-primary">GUARDAR</button>
                                 <a href="{{ url('estadocivil/buscar') }}" class="btn btn-danger">CANCELAR</a>
                             </div>
@@ -188,7 +207,10 @@
     });
 
     $('#duracion').on('apply.daterangepicker', function(ev, picker) {
-        alert($('#duracion').val());
+        var fechas = $('#duracion').val();
+        var divide = fechas.split(' - ');
+        $('#fecha_inicio').val(divide[0]);
+        $('#fecha_fin').val(divide[1]);
     });
 
     $('#buscar').click(function(){
