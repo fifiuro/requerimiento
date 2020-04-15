@@ -6,7 +6,6 @@
             <div class="card-header">
                 <h3 class="card-title">AGREGAR DATOS PERSONALES</h3>
             </div>
-
             <form role="form" method="POST" action="{{ url('personal/nuevo') }}">
                 @csrf
                 <div class="card-body">
@@ -131,7 +130,7 @@
                     </div>
                     <div class="form-group">
                         <label for="domicilio">Domicilio *</label>
-                        <textarea name="domicilio" id="domicilio" cols="30" rows="10" class="form-control" required>{{ old('domicilio') }}</textarea>
+                        <textarea name="domicilio" id="domicilio" cols="30" rows="3" class="form-control" required>{{ old('domicilio') }}</textarea>
                         @if ($errors->has('domicilio'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('domicilio') }}

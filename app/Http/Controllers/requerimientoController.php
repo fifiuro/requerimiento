@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\requerimiento\Requerimiento;
+use App\configuracion\Centrosalud;
+use App\configuracion\Contrato;
+use App\configuracion\Area;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ValidarRequerimientoRequest;
 
 class requerimientoController extends Controller
 {
@@ -14,7 +19,38 @@ class requerimientoController extends Controller
      */
     public function index()
     {
-        //
+        $centro = CentroSalud::where('estado','=',true)->get();
+        
+        return view('requerimiento.buscar')->with('centro',$centro);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $centro = CentroSalud::where('estado','=',true)->get();
+        $find = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
+                             ->join('centro_salud','centro_salud.id_cen','=','requerimientos.id_cen')
+                             ->where('requerimientos.estado','=',$request->estado.'%')
+                             ->whereOr('datos_personales','like','%'.$request->ci.'%')
+                             ->whereOr('centro_salud','=',$request->centro)
+                             ->select('id_req','centro_salud.nombre as centro','datos_personales.nombre','datos_personales.paterno','datos_personales.materno','requerimientos.estado')
+                             ->get();
+        if(!is_null($find)){
+            return view('requerimiento.buscar')->with('find', $find)
+                                               ->with('centro', $centro)
+                                               ->with('estado', '1')
+                                               ->with('mensaje', '');
+        }else{
+            return view('requerimiento.buscar')->with('find', $find)
+                                               ->with('centro', $centro)
+                                               ->with('estado', '0')
+                                               ->with('mensaje', 'No se tiene resultado para la busqueda: '.$request->cargo);
+        }
     }
 
     /**
@@ -24,7 +60,13 @@ class requerimientoController extends Controller
      */
     public function create()
     {
-        return view('requerimiento.nuevo');
+        $centro = Centrosalud::where('estado','=',true)->get();
+        $contrato = Contrato::where('estado','=',true)->get();
+        $area = Area::where('estado','=',true)->get();
+
+        return view('requerimiento.nuevo')->with('centro',$centro)
+                                          ->with('contrato',$contrato)
+                                          ->with('area',$area);
     }
 
     /**
@@ -33,20 +75,28 @@ class requerimientoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidarRequerimientoRequest $request)
     {
-        //
-    }
+        $centro = CentroSalud::where('estado','=',true)->get();
+        $find = new Requerimiento;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $find->id_per = $request->id_per;
+        $find->id_cen = $request->id_cen;
+        $find->id_con = $request->id_con;
+        $find->id_car = $request->id_car;
+        $find->id_niv = $request->id_niv;
+        $find->motivo = $request->motivo;
+        $find->fecha_inicio = $request->fecha_inicio;
+        $find->fecha_fin = $request->fecha_fin;
+        $find->nota_requerimiento = $request->nota_requerimiento;
+        $find->fecha_nota_requerimiento = $request->fecha_nota_requerimiento;
+        $find->observaciones = $request->observaciones;
+
+        $find->save();
+
+        \toastr()->success('Se agrego correctamente el registro.');
+        
+        return view('requerimiento.buscar')->with('centro',$centro);
     }
 
     /**
@@ -57,7 +107,27 @@ class requerimientoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $find = Requerimiento::find($id);
+        $centro = Centrosalud::where('estado','=',true)->get();
+        $contrato = Contrato::where('estado','=',true)->get();
+        $area = Area::where('estado','=',true)->get();
+
+        return view('requerimiento.editar')->with('find',$find)
+                                           ->with('centro',$centro)
+                                          ->with('contrato',$contrato)
+                                          ->with('area',$area);
+        
+        if(!is_null($find)){
+            return view('requerimiento.editar')->with('find',$find)
+                                               ->with('centro',$centro)
+                                               ->with('contrato',$contrato)
+                                               ->with('area',$area)
+                                               ->with('mensaje','');
+        }else{
+            \toastr()->error('No se encontro el registro a Modificar.');
+
+            return view('requerimiento.buscar');
+        }
     }
 
     /**
@@ -69,7 +139,47 @@ class requerimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $centro = CentroSalud::where('estado','=',true)->get();
+        $find = Requerimiento::find($request->id_req);
+
+        if(!is_null($find)){
+            $find->id_per = $request->id_per;
+            $find->id_cen = $request->id_cen;
+            $find->id_con = $request->id_con;
+            $find->id_car = $request->id_car;
+            $find->id_niv = $request->id_niv;
+            $find->motivo = $request->motivo;
+            $find->fecha_inicio = $request->fecha_inicio;
+            $find->fecha_fin = $request->fecha_fin;
+            $find->nota_requerimiento = $request->nota_requerimiento;
+            $find->fecha_nota_requerimiento = $request->fecha_nota_requerimiento;
+            $find->observaciones = $request->observaciones;
+
+            $find->save();
+
+            \toastr()->success('Se modificó correctamente el registro.');
+        }else{
+            \toastr()->success('No se encontro el registro a Modificar.');
+        }
+        
+        return view('requerimiento.buscar')->with('centro',$centro);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\configuracionCargo  $configuracionCargo
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm($id)
+    {
+        $find = Requerimiento::find($id);
+
+        if(is_null($find)){
+            \toastr()->success('No se encontro el registro a Eliminar.');
+        }
+
+        return view('requerimiento.confirma')->with('id', $find->id_req);
     }
 
     /**
@@ -80,6 +190,17 @@ class requerimientoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $centro = CentroSalud::where('estado','=',true)->get();
+        $find = Requerimiento::find($request->id);
+
+        if(!is_null($find)){
+            $find->delete();
+
+            \toastr()->success('Se Eliminó correctamente el registro.');
+        }else{
+            \toastr()->error('No se encontro el registro a Eliminar.');
+        }
+        
+        return view('requerimiento.buscar')->with('centro',$centro);
     }
 }

@@ -66,9 +66,9 @@
                                         <div class="form-group col-md-6">
                                             <label for="id_cen">Centro de Salud *</label>
                                             <select name="id_cen" id="id_cen" class="form-control" required>
-                                                {{--  @foreach ($centro_salud as $cs)
+                                                @foreach ($centro as $cs)
                                                     <option value="{{ $cs->id_cen }}">{{ $cs->nombre }}</option>
-                                                @endforeach  --}}
+                                                @endforeach
                                             </select>
                                             @if ($errors->has('id_cen'))
                                                 <small class="form-text text-danger">
@@ -79,9 +79,9 @@
                                         <div class="form-group col-md-6">
                                             <label for="id_con">Tipo de Contrato *</label>
                                             <select name="id_con" id="id_con" class="form-control" required>>
-                                                {{--  @foreach ($contrato as $c)
+                                                @foreach ($contrato as $c)
                                                     <option value="{{ $c->id_con }}">{{ $c->contrato }}</option>
-                                                @endforeach  --}}
+                                                @endforeach
                                             </select>
                                             @if ($errors->has('id_con'))
                                                 <small class="form-text text-danger">
@@ -93,9 +93,9 @@
                                     <div class="form-group col-md-12">
                                         <label for="id_are">Tipo de Cargo *</label>
                                         <select name="id_are" id="id_are" class="form-control" required>
-                                            {{--  @foreach ($area as $a)
-                                                <option value="{{ $c->id_are }}">{{ $ca->tipo }}</option>
-                                            @endforeach  --}}
+                                            @foreach ($area as $a)
+                                                <option value="{{ $a->id_are }}">{{ $a->tipo }}</option>
+                                            @endforeach
                                         </select>
                                         @if ($errors->has('id_are'))
                                             <small class="form-text text-danger">
@@ -141,15 +141,17 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="fecha_inicio">Duracion en Fechas:</label>
+                                        <label for="duracion">Duracion en Fechas:</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
                                                     <i class="far fa-calendar-alt"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control float-right" id="reservation">
+                                            <input type="text" class="form-control float-right" id="duracion">
                                         </div>
+                                        <input type="date" name="fecha_inicio" id="fecha_inicio" required>
+                                        <input type="date" name="fecha_fin" id="fecha_fin" required>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +176,7 @@
 @stop
 
 @section('extra')
-    $('#reservation').daterangepicker({
+    $('#duracion').daterangepicker({
         "drops": "up",
         "locale": {
             "format": "DD/MM/YYYY",
@@ -183,6 +185,10 @@
             "daysOfWeek": ["Do","Lu","Ma","Mi","Ju","Vi","Sa"],
             "monthNames": ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
         }
+    });
+
+    $('#duracion').on('apply.daterangepicker', function(ev, picker) {
+        alert($('#duracion').val());
     });
 
     $('#buscar').click(function(){

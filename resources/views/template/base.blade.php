@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="{{ asset('css/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  {{--  Libreria que nos permite realizar Notiticaciones  --}}
+  {{-- Libreria que nos permite realizar Notiticaciones --}}
   <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.css') }}">
@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="{{ asset('css/page.css') }}">
   {{-- Tipo de Letra --}}
   <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -49,6 +50,7 @@
   </nav>
   <!-- /.navbar -->
 
+  
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -139,7 +141,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('requerimiento/nuevo') }}" class="nav-link">
+            <a href="{{ url('requerimiento/buscar') }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
                 Requerimiento
