@@ -6,6 +6,7 @@ use App\requerimiento\Requerimiento;
 use App\configuracion\Centrosalud;
 use App\configuracion\Contrato;
 use App\configuracion\Area;
+use App\configuracion\Documento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarRequerimientoRequest;
@@ -63,10 +64,12 @@ class requerimientoController extends Controller
         $centro = Centrosalud::where('estado','=',true)->get();
         $contrato = Contrato::where('estado','=',true)->get();
         $area = Area::where('estado','=',true)->get();
+        $documento = Documento::where('estado', '=', true)->get();
 
         return view('requerimiento.nuevo')->with('centro',$centro)
                                           ->with('contrato',$contrato)
-                                          ->with('area',$area);
+                                          ->with('area',$area)
+                                          ->with('documento',$documento);
     }
 
     /**
