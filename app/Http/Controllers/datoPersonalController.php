@@ -30,7 +30,15 @@ class datoPersonalController extends Controller
      */
     public function show(Request $request)
     {
-        $find = DatoPersonal::where(DB::raw('concat(datos_personales.nombre," ",datos_personales.paterno," ",datos_personales.materno)'), 'like', '%'.$request->nombre.'%')->get();
+        if($request->data == '1'){
+            $find = DatoPersonal::leftjoin('requerimientos','requerimientos.id_per','=','datos_personales.id_per')
+                                ->where(DB::raw('concat(datos_personales.nombre," ",datos_personales.paterno," ",datos_personales.materno)'), 'like', '%'.$request->nombre.'%')
+                                ->whereNull('requerimientos.estado')
+                                ->select('datos_personales.id_per','datos_personales.nombre','datos_personales.paterno','datos_personales.materno','datos_personales.telefono','datos_personales.celular','datos_personales.email')
+                                ->get();
+        }else{
+            $find = DatoPersonal::where(DB::raw('concat(datos_personales.nombre," ",datos_personales.paterno," ",datos_personales.materno)'), 'like', '%'.$request->nombre.'%')->get();
+        }
 
         if(!is_null($find)){
             if($request->data == '1'){

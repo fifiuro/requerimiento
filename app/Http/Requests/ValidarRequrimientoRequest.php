@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ValidarRequrimientoRequest extends FormRequest
 {
@@ -35,31 +34,27 @@ class ValidarRequrimientoRequest extends FormRequest
             'fecha_fin' => 'required|date',
             'nota_requerimiento' => 'required|min:1|max:50',
             'fecha_nota_requerimiento' => 'required|date',
-            'observaciones' => 'required|min:1|max:255',
-            'estado' => [
-                        'required',
-                        Rule::in(['1', '0']),
-            ]
+            'observaciones' => 'required|min:1|max:255'
         ];
     }
 
     public function messages()
     {
         return [
-            'id_per' => 'Los :attribute es obligatorio.',
-            'id_per' => 'los :attribute debe estar registradas.',
+            'id_per.required' => 'Los :attribute es obligatorio.',
+            'id_per.exists' => 'los :attribute debe estar registradas.',
 
-            'id_cen' => 'Los :attribute es obligatorio.',
-            'id_cen' => 'los :attribute debe estar registradas.',
+            'id_cen.required' => 'Los :attribute es obligatorio.',
+            'id_cen.exists' => 'los :attribute debe estar registradas.',
 
-            'id_con' => 'Los :attribute es obligatorio.',
-            'id_con' => 'los :attribute debe estar registradas.',
+            'id_con.required' => 'Los :attribute es obligatorio.',
+            'id_con.exists' => 'los :attribute debe estar registradas.',
 
-            'id_car' => 'El :attribute es obligatorio.',
-            'id_car' => 'El :attribute debe estar registradas.',
+            'id_car.required' => 'El :attribute es obligatorio.',
+            'id_car.exists' => 'El :attribute debe estar registradas.',
 
-            'id_niv' => 'El :attribute es obligatorio.',
-            'id_niv' => 'El :attribute debe estar registradas.',
+            'id_niv.required' => 'El :attribute es obligatorio.',
+            'id_niv.exists' => 'El :attribute debe estar registradas.',
 
             'motivo.required' => 'El :attribute es obligatorio.',
             'motivo.min' => 'El :attribute debe contener mas de una letra.',
@@ -80,10 +75,8 @@ class ValidarRequrimientoRequest extends FormRequest
 
             'observaciones.required' => 'La :attribute es obligatorio.',
             'observaciones.min' => 'La :attribute debe contener mas de una letra.',
-            'observaciones.max' => 'La :attribute debe contener maximo 255 letras.',
+            'observaciones.max' => 'La :attribute debe contener maximo 255 letras.'
 
-            'estado.required' => 'El :attribute es obligatorio',
-            'estado.in' => 'El :attribute debe contener estos valores: Activo o Desactivado.'
         ];
     }
 
@@ -100,8 +93,7 @@ class ValidarRequrimientoRequest extends FormRequest
             'fecha_fin' => 'Fecha de Fin de Contrato',
             'nota_requerimiento' => 'Nota de Requerimiento',
             'fecha_nota_requerimiento' => 'Fecha de la Nota de Requerimiento',
-            'observaciones' => 'Observación',
-            'estado'=> 'Estado del Requerimiento'
+            'observaciones' => 'Observación'
         ];
     }
 }

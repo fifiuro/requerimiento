@@ -104,6 +104,7 @@ Route::group(['prefix' => 'area'], function(){
 // Rutas CARGOS
 Route::group(['prefix' => 'cargo'], function(){
     Route::get('buscar/{id}', 'cargoController@index');
+    Route::post('buscar','cargoController@show');
     Route::get('nuevo/{id}', 'cargoController@create');
     Route::post('nuevo', 'cargoController@store');
     Route::get('editar/{id}/{ie}', 'cargoController@edit');

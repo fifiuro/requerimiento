@@ -27,20 +27,23 @@ class nivelController extends Controller
      */
     public function show(Request $request)
     {
-        /* $find = Nivel::where('nivel', 'like', '%'.$request->nivel.'%')->get(); */
-
-        $find = Nivel::join('areas','areas.id_are','=','niveles.id_are')
+        if($request->data == 1){
+            $find = Nivel::where('id_are','=',$request->nivel)->get();
+            return $find->toJson();
+        }else{
+            $find = Nivel::join('areas','areas.id_are','=','niveles.id_are')
                      ->where('niveles.nivel','like','%'.$request->nivel.'%')
                      ->get();
 
-        if(!is_null($find)){
-            return view('nivel.buscar')->with('find', $find)
-                                            ->with('estado', '1')
-                                            ->with('mensaje', '');
-        }else{
-            return view('nivel.buscar')->with('find', $find)
-                                            ->with('estado', '0')
-                                            ->with('mensaje', 'No se tiene resultado para la busqueda: '.$request->nivel);
+            if(!is_null($find)){
+                return view('nivel.buscar')->with('find', $find)
+                                                ->with('estado', '1')
+                                                ->with('mensaje', '');
+            }else{
+                return view('nivel.buscar')->with('find', $find)
+                                                ->with('estado', '0')
+                                                ->with('mensaje', 'No se tiene resultado para la busqueda: '.$request->nivel);
+            }
         }
     }
 

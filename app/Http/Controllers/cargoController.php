@@ -42,22 +42,14 @@ class cargoController extends Controller
      * @param  \App\configuracionCargo  $configuracionCargo
      * @return \Illuminate\Http\Response
      */
-    /* public function show(Request $request)
+    public function show(Request $request)
     {
-        $find = Cargo::join('areas','areas.id_are','=','cargos.id_are')
-                     ->where('cargos.cargo','like','%'.$request->cargo.'%')
-                     ->get();
+        $find = Cargo::where('id_are','=',$request->cargo)->get();
 
         if(!is_null($find)){
-            return view('cargo.buscar')->with('find', $find)
-                                            ->with('estado', '1')
-                                            ->with('mensaje', '');
-        }else{
-            return view('cargo.buscar')->with('find', $find)
-                                            ->with('estado', '0')
-                                            ->with('mensaje', 'No se tiene resultado para la busqueda: '.$request->cargo);
+            return $find->toJson();
         }
-    } */
+    }
 
     /**
      * Show the form for creating a new resource.

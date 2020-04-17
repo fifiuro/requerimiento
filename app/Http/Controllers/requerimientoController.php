@@ -7,9 +7,11 @@ use App\configuracion\Centrosalud;
 use App\configuracion\Contrato;
 use App\configuracion\Area;
 use App\configuracion\Documento;
+use App\configuracion\Cargo;
+use App\configuracion\Nivel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\ValidarRequerimientoRequest;
+use App\Http\Requests\ValidarRequrimientoRequest;
 
 class requerimientoController extends Controller
 {
@@ -39,7 +41,7 @@ class requerimientoController extends Controller
                              ->where('requerimientos.estado','=',$request->estado.'%')
                              ->whereOr('datos_personales','like','%'.$request->ci.'%')
                              ->whereOr('centro_salud','=',$request->centro)
-                             ->select('id_req','centro_salud.nombre as centro','datos_personales.nombre','datos_personales.paterno','datos_personales.materno','requerimientos.estado')
+                             ->select('id_req','centro_salud.nombre as centro','datos_personales.nombre','datos_personales.paterno','datos_personales.materno','requerimientos.estado','nota_requerimiento')
                              ->get();
         if(!is_null($find)){
             return view('requerimiento.buscar')->with('find', $find)
@@ -78,7 +80,7 @@ class requerimientoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidarRequerimientoRequest $request)
+    public function store(ValidarRequrimientoRequest $request)
     {
         $centro = CentroSalud::where('estado','=',true)->get();
         $find = new Requerimiento;
@@ -94,6 +96,7 @@ class requerimientoController extends Controller
         $find->nota_requerimiento = $request->nota_requerimiento;
         $find->fecha_nota_requerimiento = $request->fecha_nota_requerimiento;
         $find->observaciones = $request->observaciones;
+        $find->estado = true;
 
         $find->save();
 
@@ -110,15 +113,30 @@ class requerimientoController extends Controller
      */
     public function edit($id)
     {
-        $find = Requerimiento::find($id);
+        $find = Requerimiento::join('cargos','cargos.id_car','=','requerimientos.id_car')
+                             ->join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
+                             ->where('requerimientos.id_req','=',$id)
+                             ->get();
         $centro = Centrosalud::where('estado','=',true)->get();
         $contrato = Contrato::where('estado','=',true)->get();
         $area = Area::where('estado','=',true)->get();
+        $cargo = Cargo::where('id_are','=',$find[0]->id_are)->get();
+        $nivel = Nivel::where('id_are','=',$find[0]->id_are)->get();
+        $documento = Documento::where('estado', '=', true)->get();
+        
+        $date1 = date('d/m/Y',strtotime($find[0]->fecha_inicio));
+        $find[0]->fecha_inicio1 = $date1;
 
-        return view('requerimiento.editar')->with('find',$find)
+        $date2 = date('d/m/Y',strtotime($find[0]->fecha_fin));
+        $find[0]->fecha_fin1 = $date2;
+
+        return view('requerimiento.editar')->with('find',$find[0])
                                            ->with('centro',$centro)
-                                          ->with('contrato',$contrato)
-                                          ->with('area',$area);
+                                           ->with('contrato',$contrato)
+                                           ->with('area',$area)
+                                           ->with('cargo',$cargo)
+                                           ->with('nivel',$nivel)
+                                           ->with('documento',$documento);
         
         if(!is_null($find)){
             return view('requerimiento.editar')->with('find',$find)
@@ -140,7 +158,7 @@ class requerimientoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ValidarRequrimientoRequest $request)
     {
         $centro = CentroSalud::where('estado','=',true)->get();
         $find = Requerimiento::find($request->id_req);
@@ -157,6 +175,7 @@ class requerimientoController extends Controller
             $find->nota_requerimiento = $request->nota_requerimiento;
             $find->fecha_nota_requerimiento = $request->fecha_nota_requerimiento;
             $find->observaciones = $request->observaciones;
+            $find->estado = $request->estado;
 
             $find->save();
 
@@ -176,6 +195,7 @@ class requerimientoController extends Controller
      */
     public function confirm($id)
     {
+        $centro = CentroSalud::where('estado','=',true)->get();
         $find = Requerimiento::find($id);
 
         if(is_null($find)){
@@ -191,7 +211,7 @@ class requerimientoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         $centro = CentroSalud::where('estado','=',true)->get();
         $find = Requerimiento::find($request->id);

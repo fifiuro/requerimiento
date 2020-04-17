@@ -44,10 +44,11 @@
                         </div>
                         <div class="col-md-1">
                             <div class="form-group text-center">
+                                {{-- Boton de Buscar --}}
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
+                                {{-- Boton de Nuevo --}}
                                 <a href="{{ url('requerimiento/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>
@@ -79,6 +80,7 @@
                             <tbody>
                                 @foreach ($find as $f)
                                 <tr>
+                                    <td>{{ $f->nota_requerimiento }}</td>
                                     <td>{{ $f->centro }}</td>
                                     <td>{{ $f->nombre }} {{ $f->paterno }} {{ $f->materno }}</td>
                                     <td>

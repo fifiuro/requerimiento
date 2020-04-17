@@ -1,6 +1,17 @@
 @extends('template/base')
 
 @section('content')
+    @if ($errors->any())
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
     <div class="loader text-center" id="loader">
         <img src="{{ asset('images/img/Spinner-1s-200px.gif') }}" class="img">
         <h3>Espere mientras trabajamos en su solicitud.</h3>
@@ -10,7 +21,7 @@
             <div class="card-header">
                 <h3 class="card-title">AGREGAR REQUERIMIENTO</h3>
             </div>
-            <form role="form" method="POST" action="{{ url('estadocivil/nuevo') }}">
+            <form role="form" method="POST" action="{{ url('requerimiento/nuevo') }}">
                 @csrf
                 <div class="row">
                     <div class="col-5 col-sm-3">
@@ -26,6 +37,7 @@
                             {{-- FORMULARIO DE DATOS PERSONALES --}}
                             <div class="tab-pane text-left fade show active" id="vert-tabs-personal" role="tabpanel" aria-labelledby="vert-tabs-personal-tab">
                                 <div class="card-body">
+                                    {{-- ES EL FORMULARIO DE BUSQUEDA --}}
                                     <div id="buscador" class="row" style="display: flex">
                                         <div class="col-md-11">
                                             <div class="form-group">
@@ -46,7 +58,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="resul" class="row" style="display: flex">
+                                    {{-- MUESTRA EL RESULTADO DE LA BUSQUEDA --}}
+                                    <div id="resul" class="row" style="display: none">
                                         <table class="table">
                                             <thead>
                                                 <th>Nombre Completo</th>
@@ -58,12 +71,13 @@
                                             <tbody id="resultado"></tbody>
                                         </table>
                                     </div>
+                                    {{-- MUESTRA LOS DATOS DEL PERSONAL SELECCIONADO --}}
                                     <div id="seleccionado" style="display:none">
                                         <table class="table">
                                             <tr>
                                                 <td colspan="2">
+                                                    <a href="#" id="close"><i class="fas fa-times"></i></a>
                                                     <h2>PERSONA SELECCIONADA</h2>
-                                                    <a href="#" id="close">CERRAR</a>
                                                     <input type="hidden" name="id_per" id="id_per">
                                                 </td>
                                             </tr>
@@ -122,24 +136,18 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label for="id_are">Tipo de Cargo *</label>
-                                        <select name="id_are" id="id_are" class="form-control" required>
+                                        <select id="id_are" class="form-control" required>
+                                            <option value=""></option>
                                             @foreach ($area as $a)
                                                 <option value="{{ $a->id_are }}">{{ $a->tipo }}</option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('id_are'))
-                                            <small class="form-text text-danger">
-                                                {{ $errors->first('id_are') }}
-                                            </small>
-                                        @endif
                                     </div>
-                                    <div class="row">
+                                    <div id="cargo_nivel" class="row" style="display: none">
                                         <div class="form-group col-md-6">
                                             <label for="id_car">Cargo *</label>
                                             <select name="id_car" id="id_car" class="form-control" required>
-                                                {{--  @foreach ($cargo as $ca)
-                                                    <option value="{{ $ca->id_car }}">{{ $ca->cargo }}</option>
-                                                @endforeach  --}}
+                                                
                                             </select>
                                             @if ($errors->has('id_car'))
                                                 <small class="form-text text-danger">
@@ -150,9 +158,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="id_niv">Nivel *</label>
                                             <select name="id_niv" id="id_niv" class="form-control" required>
-                                                {{--  @foreach ($nivel as $n)
-                                                    <option value="{{ $n->id_niv }}">{{ $n->nivel }}</option>
-                                                @endforeach  --}}
+                                                
                                             </select>
                                             @if ($errors->has('id_niv'))
                                                 <small class="form-text text-danger">
@@ -160,28 +166,28 @@
                                                 </small>
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="motivo">Motivo de Contrato *</label>
-                                        <textarea name="motivo" id="motivo" cols="30" rows="3" class="form-control" required></textarea>
-                                        @if ($errors->has('motivo'))
-                                            <small class="form-text text-danger">
-                                                {{ $errors->first('motivo') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="duracion">Duracion en Fechas:</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="far fa-calendar-alt"></i>
-                                                </span>
-                                            </div>
-                                            <input type="text" class="form-control float-right" id="duracion">
+                                        <div class="form-group col-md-12">
+                                            <label for="motivo">Motivo de Contrato *</label>
+                                            <textarea name="motivo" id="motivo" cols="30" rows="3" class="form-control" required></textarea>
+                                            @if ($errors->has('motivo'))
+                                                <small class="form-text text-danger">
+                                                    {{ $errors->first('motivo') }}
+                                                </small>
+                                            @endif
                                         </div>
-                                        <input type="hidden" name="fecha_inicio" id="fecha_inicio" required>
-                                        <input type="hidden" name="fecha_fin" id="fecha_fin" required>
+                                        <div class="form-group col-md-12">
+                                            <label for="duracion">Duracion en Fechas:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="far fa-calendar-alt"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control float-right" id="duracion">
+                                            </div>
+                                            <input type="hidden" name="fecha_inicio" id="fecha_inicio" required>
+                                            <input type="hidden" name="fecha_fin" id="fecha_fin" required>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -267,6 +273,7 @@
 @stop
 
 @section('extra')
+    // EL CONTROL DEL RAGO DE FECHAS
     $('#duracion').daterangepicker({
         "drops": "up",
         "locale": {
@@ -277,15 +284,21 @@
             "monthNames": ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
         }
     });
-
+    // CAPTURAR Y CONVERTIR LOS DATOS AL FORMATO DE LA FECHA QUE SE REQUIERE EN LA BASE DE DATOS
     $('#duracion').on('apply.daterangepicker', function(ev, picker) {
         var fechas = $('#duracion').val();
         var divide = fechas.split(' - ');
-        $('#fecha_inicio').val(divide[0]);
-        $('#fecha_fin').val(divide[1]);
+        $('#fecha_inicio').val(formato(divide[0]));
+        $('#fecha_fin').val(formato(divide[1]));
     });
+    function formato(fecha){
+        var f = fecha.split('/');
 
+        return f[2] + '-' + f[1] + '-' + f[0];
+    }
+    // BUSQUEDA DE DATOS PERSONAS
     $('#buscar').click(function(){
+        $('#resultado').html('');
         if($('#nombre').val() != '') {
             $.ajax({
                 url: "{{ url('personal/buscar') }}",
@@ -294,8 +307,9 @@
                 method: "POST",
                 success: function(result)
                 {
+                    $("#resul").show(1000);
                     $.each(result, function(i,item){
-                        $('#resultado').html('<tr><td>' + result[i].nombre + ' ' + result[i].paterno + ' ' + result[i].materno + '</td><td>' + result[i].telefono + '</td><td>' + result[i].celular + '</td><td>' + result[i].email + '</td><td><input type="radio" id="seleccion" value="' + result[i].id_per + '"></td></tr>');
+                        $('#resultado').append('<tr><td>' + result[i].nombre + ' ' + result[i].paterno + ' ' + result[i].materno + '</td><td>' + result[i].telefono + '</td><td>' + result[i].celular + '</td><td>' + result[i].email + '</td><td><input type="radio" id="seleccion" value="' + result[i].id_per + '"></td></tr>');
                     });
                     $('#loader').css('display','none');
                 },
@@ -308,12 +322,12 @@
             });
         }
     });
-
+    // SELECCIONA AL PERSONAL 
     $('body').on("click","#seleccion", function(){
         var id = $(this).val();
-        $("#seleccionado").css("display","flex");
-        $("#buscador").css("display","none");
-        $("#resul").css("display","none");
+        $("#seleccionado").show(1000);
+        $("#buscador").hide(1000);
+        $("#resul").hide(1000);
 
         var todo = $(this).parent().parent();
         todo.each(function() {
@@ -323,12 +337,62 @@
             $("#cellphone").val($(this).find("td").eq(2).html());
         })
     });
-
+    // CERRAR EL PERSONAL SELECCIONADO
     $("#close").click(function(){
         event.preventDefault();
         $("#id_per").val('');
-        $("#seleccionado").css("display","none");
-        $("#buscador").css("display","flex");
-        $("#resul").css("display","flex");
+        $("#seleccionado").hide(1000);
+        $("#buscador").show(1000);
+        $("#resul").hide(1000);
+        $("#nombre").val('');
+    });
+    // CAPTURAR EL DATO SELECCIONADO PARA BUSCAR EL CARGO Y EL NIVEL
+    $("#id_are").on('change',function(){
+        // BUSCAR CARGO SEGUN EL TIPO DE CARGO
+        if($(this).val() != ''){
+            $("#cargo_nivel").show(1000);
+            $('#id_car').html('');
+            $('#id_niv').html('');
+            // BUSCAR CARGO SEGUN TIPO DE NIVEL
+            $.ajax({
+                url: "{{ url('cargo/buscar') }}",
+                data: "cargo="+$(this).val()+"&_token={{ csrf_token() }}",
+                dataType: "json",
+                method: "POST",
+                success: function(result)
+                {
+                    $.each(result, function(i,item){
+                        $('#id_car').append('<option value="'+result[i].id_car+'">'+result[i].cargo+'</option>');
+                    });
+                    $('#loader').css('display','none');
+                },
+                fail: function() {
+    
+                },
+                beforeSend: function() {
+                    $('#loader').css('display','inline');
+                }
+            });
+            // BUSCAR NIVEL SEGUN TIPO DE NIVEL
+            $.ajax({
+                url: "{{ url('nivel/buscar') }}",
+                data: "nivel="+$(this).val()+"&_token={{ csrf_token() }}&data=1",
+                dataType: "json",
+                method: "POST",
+                success: function(result)
+                {
+                    $.each(result, function(i,item){
+                        $('#id_niv').append('<option value="'+result[i].id_niv+'">'+result[i].nivel+', '+result[i].horas+' hrs.'+', '+result[i].tiempo+'</option>');
+                    });
+                    $('#loader').css('display','none');
+                },
+                fail: function() {
+    
+                },
+                beforeSend: function() {
+                    $('#loader').css('display','inline');
+                }
+            });
+        }
     });
 @stop
