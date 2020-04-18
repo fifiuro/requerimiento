@@ -253,21 +253,33 @@
                                                 @case(1)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}">
+                                                            @if (in_array($d->id_doc,$requisito))
+                                                                <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}" checked>
+                                                            @else
+                                                                <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}">
+                                                            @endif
                                                             {{ $d->documento }}
                                                         </td>
                                                     <?php $col = $col +1; ?>
                                                     @break
                                                 @case(2)
                                                         <td>
-                                                            <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}">
+                                                            @if (in_array($d->id_doc,$requisito))
+                                                                <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}" checked>
+                                                            @else
+                                                                <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}">
+                                                            @endif
                                                             {{ $d->documento }}
                                                         </td>
                                                     <?php $col = $col +1; ?>
                                                     @break
                                                 @case(3)
                                                         <td>
-                                                            <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}">
+                                                            @if (in_array($d->id_doc,$requisito))
+                                                                <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}" checked>
+                                                            @else
+                                                                <input type="checkbox" id="documento" name="documento[]" value="{{ $d->id_doc }}">
+                                                            @endif
                                                             {{ $d->documento }}
                                                         </td>
                                                     </tr>

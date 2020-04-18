@@ -9,6 +9,7 @@ use App\configuracion\Area;
 use App\configuracion\Documento;
 use App\configuracion\Cargo;
 use App\configuracion\Nivel;
+use App\requerimiento\Requisito;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarRequrimientoRequest;
@@ -99,6 +100,18 @@ class requerimientoController extends Controller
         $find->estado = true;
 
         $find->save();
+        // RECUPERANDO EL ID DEL ULTIMO REGISTRO GUARDADO
+        $id = $find->id_req;
+        // GUARDANDO REQUISITOS
+        $doc = $request->documento;
+        asort($doc);
+        $requi = new Requisito;
+
+        $requi->id_req = $id;
+        $requi->documento = implode("-",$doc);
+        $requi->estado = true;
+
+        $requi->save();
 
         \toastr()->success('Se agrego correctamente el registro.');
         
@@ -123,6 +136,9 @@ class requerimientoController extends Controller
         $cargo = Cargo::where('id_are','=',$find[0]->id_are)->get();
         $nivel = Nivel::where('id_are','=',$find[0]->id_are)->get();
         $documento = Documento::where('estado', '=', true)->get();
+        $requisito = Requisito::where('id_req','=',$id)
+                              ->select('documento')
+                              ->get();
         
         $date1 = date('d/m/Y',strtotime($find[0]->fecha_inicio));
         $find[0]->fecha_inicio1 = $date1;
@@ -130,20 +146,17 @@ class requerimientoController extends Controller
         $date2 = date('d/m/Y',strtotime($find[0]->fecha_fin));
         $find[0]->fecha_fin1 = $date2;
 
-        return view('requerimiento.editar')->with('find',$find[0])
-                                           ->with('centro',$centro)
-                                           ->with('contrato',$contrato)
-                                           ->with('area',$area)
-                                           ->with('cargo',$cargo)
-                                           ->with('nivel',$nivel)
-                                           ->with('documento',$documento);
-        
+        $req = explode('-',$requisito[0]->documento);
+
         if(!is_null($find)){
-            return view('requerimiento.editar')->with('find',$find)
+            return view('requerimiento.editar')->with('find',$find[0])
                                                ->with('centro',$centro)
                                                ->with('contrato',$contrato)
                                                ->with('area',$area)
-                                               ->with('mensaje','');
+                                               ->with('cargo',$cargo)
+                                               ->with('nivel',$nivel)
+                                               ->with('documento',$documento)
+                                               ->with('requisito',$req);
         }else{
             \toastr()->error('No se encontro el registro a Modificar.');
 
@@ -178,6 +191,11 @@ class requerimientoController extends Controller
             $find->estado = $request->estado;
 
             $find->save();
+            // GUARDANDO REQUISITOS
+            $doc = $request->documento;
+            asort($doc);
+            $requi = Requisito::where('id_req','=',$request->id_req)
+                              ->update(['documento'=>implode("-",$doc)]);
 
             \toastr()->success('Se modificó correctamente el registro.');
         }else{
@@ -217,6 +235,7 @@ class requerimientoController extends Controller
         $find = Requerimiento::find($request->id);
 
         if(!is_null($find)){
+            $requi = Requisito::where('id_req','=',$request->id)->delete();
             $find->delete();
 
             \toastr()->success('Se Eliminó correctamente el registro.');
