@@ -13,6 +13,19 @@ class centrosaludController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:centrosalud-list|centrosalud-create|centrosalud-edit|centrosalud-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:centrosalud-create', ['only' => ['create','store']]);
+         $this->middleware('permission:centrosalud-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:centrosalud-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('centrosalud.buscar');

@@ -22,10 +22,12 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
+                                {{-- Boton de Nuevo --}}
+                                @can('nivel-create')
                                 <a href="{{ url('nivel/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -53,7 +55,9 @@
                                     <th>Salario</th>
                                     <th>Literal</th>
                                     <th>Estado</th>
+                                    @can('nivel-edit' || 'nivel-delete')
                                     <th>Acciones</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,13 +79,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('nivel-edit')
                                         <a href="{{ url('nivel/editar/'.$f->id_niv) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
-                                        </a>
+                                        </a>                                            
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('nivel-delete')
                                         <a href="{{ url('nivel/confirma/'.$f->id_niv) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        </a>    
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

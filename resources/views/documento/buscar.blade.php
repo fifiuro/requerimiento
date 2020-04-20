@@ -22,10 +22,13 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
+                                {{-- Boton de Nuevo --}}
+                                @can('documento-create')
                                 <a href="{{ url('documento/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
-                                </a>
+                                </a>    
+                                @endcan
+                                
                             </div>
                         </div>
                     </div>
@@ -48,7 +51,9 @@
                                     <th style="width: 10px">#</th>
                                     <th>Documento</th>
                                     <th>Estado</th>
+                                    @can('documento-edit' && 'documento-delete')
                                     <th>Acciones</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,13 +70,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('documento-edit')
                                         <a href="{{ url('documento/editar/'.$f->id_doc) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
-                                        </a>
+                                        </a>    
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('documento-delete')
                                         <a href="{{ url('documento/confirma/'.$f->id_doc) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

@@ -13,6 +13,19 @@ class contratoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:contratos-list|contratos-create|contratos-edit|contratos-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:contratos-create', ['only' => ['create','store']]);
+         $this->middleware('permission:contratos-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:contratos-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('contrato.buscar');

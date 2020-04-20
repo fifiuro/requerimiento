@@ -17,8 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function() {
+    return view('template.inicio');
+})->middleware('auth');
+
 // Rutas DEPARTAMENTO
-Route::group(['prefix' => 'departamento'], function(){
+Route::group(['prefix' => 'departamento','middleware' => ['auth']], function(){
     Route::get('buscar', 'departamentoController@index');
     Route::post('buscar', 'departamentoController@show');
     Route::get('nuevo', 'departamentoController@create');
@@ -30,7 +34,7 @@ Route::group(['prefix' => 'departamento'], function(){
 });
 
 // Rutas ESTADO CIVIL
-Route::group(['prefix' => 'estadocivil'], function(){
+Route::group(['prefix' => 'estadocivil','middleware' => ['auth']], function(){
     Route::get('buscar', 'estadocivilController@index');
     Route::post('buscar', 'estadocivilController@show');
     Route::get('nuevo', 'estadocivilController@create');
@@ -42,7 +46,7 @@ Route::group(['prefix' => 'estadocivil'], function(){
 });
 
 // Rutas AFP
-Route::group(['prefix' => 'afp'], function(){
+Route::group(['prefix' => 'afp','middleware' => ['auth']], function(){
     Route::get('buscar', 'afpController@index');
     Route::post('buscar', 'afpController@show');
     Route::get('nuevo', 'afpController@create');
@@ -54,7 +58,7 @@ Route::group(['prefix' => 'afp'], function(){
 });
 
 // Rutas CENTRO DE SALUD
-Route::group(['prefix' => 'centrosalud'], function(){
+Route::group(['prefix' => 'centrosalud','middleware' => ['auth']], function(){
     Route::get('buscar', 'centrosaludController@index');
     Route::post('buscar', 'centrosaludController@show');
     Route::get('nuevo', 'centrosaludController@create');
@@ -66,7 +70,7 @@ Route::group(['prefix' => 'centrosalud'], function(){
 });
 
 // Rutas CONTRATOS
-Route::group(['prefix' => 'contrato'], function(){
+Route::group(['prefix' => 'contrato','middleware' => ['auth']], function(){
     Route::get('buscar', 'contratoController@index');
     Route::post('buscar', 'contratoController@show');
     Route::get('nuevo', 'contratoController@create');
@@ -78,7 +82,7 @@ Route::group(['prefix' => 'contrato'], function(){
 });
 
 // Rutas DOCUMENTOS
-Route::group(['prefix' => 'documento'], function(){
+Route::group(['prefix' => 'documento','middleware' => ['auth']], function(){
     Route::get('buscar', 'documentoController@index');
     Route::post('buscar', 'documentoController@show');
     Route::get('nuevo', 'documentoController@create');
@@ -90,7 +94,7 @@ Route::group(['prefix' => 'documento'], function(){
 });
 
 // Rutas AREAS
-Route::group(['prefix' => 'area'], function(){
+Route::group(['prefix' => 'area','middleware' => ['auth']], function(){
     Route::get('buscar', 'areaController@index');
     Route::post('buscar', 'areaController@show');
     Route::get('nuevo', 'areaController@create');
@@ -102,7 +106,7 @@ Route::group(['prefix' => 'area'], function(){
 });
 
 // Rutas CARGOS
-Route::group(['prefix' => 'cargo'], function(){
+Route::group(['prefix' => 'cargo','middleware' => ['auth']], function(){
     Route::get('buscar/{id}', 'cargoController@index');
     Route::post('buscar','cargoController@show');
     Route::get('nuevo/{id}', 'cargoController@create');
@@ -114,7 +118,7 @@ Route::group(['prefix' => 'cargo'], function(){
 });
 
 // Rutas NIVELES
-Route::group(['prefix' => 'nivel'], function(){
+Route::group(['prefix' => 'nivel','middleware' => ['auth']], function(){
     Route::get('buscar', 'nivelController@index');
     Route::post('buscar', 'nivelController@show');
     Route::get('nuevo', 'nivelController@create');
@@ -126,7 +130,7 @@ Route::group(['prefix' => 'nivel'], function(){
 });
 
 // Rutas DATOS PERSONALES
-Route::group(['prefix' => 'personal'], function(){
+Route::group(['prefix' => 'personal','middleware' => ['auth']], function(){
     Route::get('buscar', 'datoPersonalController@index');
     Route::post('buscar', 'datoPersonalController@show');
     Route::get('nuevo', 'datoPersonalController@create');
@@ -138,7 +142,7 @@ Route::group(['prefix' => 'personal'], function(){
 });
 
 // Rutas REQUERIMIENTO
-Route::group(['prefix' => 'requerimiento'], function(){
+Route::group(['prefix' => 'requerimiento','middleware' => ['auth']], function(){
     Route::get('buscar', 'requerimientoController@index');
     Route::post('buscar', 'requerimientoController@show');
     Route::get('nuevo', 'requerimientoController@create');
@@ -148,3 +152,12 @@ Route::group(['prefix' => 'requerimiento'], function(){
     Route::get('confirma/{id}', 'requerimientoController@confirm');
     Route::post('eliminar', 'requerimientoController@destroy');
 });
+Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles','RoleController');
+    Route::resource('users','UserController');
+});
+

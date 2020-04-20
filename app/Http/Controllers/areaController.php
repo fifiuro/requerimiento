@@ -14,6 +14,19 @@ class areaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:areacargo-list|areacargo-create|areacargo-edit|areacargo-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:areacargo-create', ['only' => ['create','store']]);
+         $this->middleware('permission:areacargo-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:areacargo-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('area.buscar');

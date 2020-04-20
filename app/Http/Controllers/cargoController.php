@@ -7,8 +7,22 @@ use App\configuracion\Area;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarCargoRequest;
 
+
 class cargoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+         $this->middleware('permission:cargo-list|cargo-create|cargo-edit|cargo-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:cargo-create', ['only' => ['create','store']]);
+         $this->middleware('permission:cargo-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:cargo-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

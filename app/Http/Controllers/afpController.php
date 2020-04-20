@@ -13,6 +13,19 @@ class afpController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:afp-list|afp-create|afp-edit|afp-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:afp-create', ['only' => ['create','store']]);
+         $this->middleware('permission:afp-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:afp-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('afp.buscar');

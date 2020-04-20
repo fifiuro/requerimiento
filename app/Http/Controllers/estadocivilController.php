@@ -13,6 +13,19 @@ class estadocivilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:estadocivil-list|estadocivil-create|estadocivil-edit|estadocivil-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:estadocivil-create', ['only' => ['create','store']]);
+         $this->middleware('permission:estadocivil-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:estadocivil-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('estadocivil.buscar');

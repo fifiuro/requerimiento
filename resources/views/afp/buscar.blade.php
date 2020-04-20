@@ -22,10 +22,12 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
+                                {{-- Boton de Nuevo --}}
+                                @can('afp-create')
                                 <a href="{{ url('afp/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -48,7 +50,9 @@
                                     <th style="width: 10px">#</th>
                                     <th>AFP</th>
                                     <th>Estado</th>
-                                    <th>Acciones</th>
+                                    @can('afp-edit' && 'afp-delete')
+                                        <th>Acciones</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,13 +69,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('afp-edit')
                                         <a href="{{ url('afp/editar/'.$f->id_afp) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('afp-delete')
                                         <a href="{{ url('afp/confirma/'.$f->id_afp) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

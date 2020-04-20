@@ -23,9 +23,11 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuveo --}}
+                                @can('area-create', Model::class)
                                 <a href="{{ url('area/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -49,7 +51,9 @@
                                     <th>Area</th>
                                     <th>Estado</th>
                                     <th>Lista</th>
-                                    <th>Acciones</th>
+                                    @can('areacargo-edit' || 'area-delete')
+                                    <th>Acciones</th>    
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,13 +73,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('areacargo-edit')
                                         <a href="{{ url('area/editar/'.$f->id_are) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
-                                        </a>
+                                        </a>    
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('areacargo-delete')
                                         <a href="{{ url('area/confirma/'.$f->id_are) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

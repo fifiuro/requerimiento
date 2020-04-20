@@ -22,10 +22,12 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
-                                <a href="{{ url('departamento/nuevo') }}" class="btn btn-danger">
-                                    <i class="fas fa-plus"></i>
-                                </a>
+                                {{-- Boton de Nuevo --}}
+                                @can('departamento-create')
+                                    <a href="{{ url('departamento/nuevo') }}" class="btn btn-danger">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -67,13 +69,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
-                                        <a href="{{ url('departamento/editar/'.$f->id_dep) }}" class="btn btn-warning" id="btn1">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        @can('departamento-edit')
+                                            <a href="{{ url('departamento/editar/'.$f->id_dep) }}" class="btn btn-warning" id="btn1">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
-                                        <a href="{{ url('departamento/confirma/'.$f->id_dep) }}" class="btn btn-danger">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        @can('departamento-delete')
+                                            <a href="{{ url('departamento/confirma/'.$f->id_dep) }}" class="btn btn-danger">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

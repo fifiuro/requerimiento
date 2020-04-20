@@ -5,9 +5,25 @@ namespace App\Http\Controllers;
 use App\configuracion\Departamento;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarDepartamentoRequest;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 
 class departamentoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+         $this->middleware('permission:departamento-list|departamento-create|departamento-edit|departamento-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:departamento-create', ['only' => ['create','store']]);
+         $this->middleware('permission:departamento-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:departamento-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

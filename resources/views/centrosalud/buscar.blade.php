@@ -23,9 +23,11 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuevo --}}
+                                @can('centrosalud-create')
                                 <a href="{{ url('centrosalud/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -49,7 +51,10 @@
                                     <th>Código</th>
                                     <th>Nombre del Centro de Salud</th>
                                     <th>Dirección</th>
+                                    <th>Estado</th>
+                                    @can('centrosalud-edit' && 'centrosalud-delete')
                                     <th>Acciones</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,13 +73,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('centrosalud-edit')
                                         <a href="{{ url('centrosalud/editar/'.$f->id_cen) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('centrosalud-delete')
                                         <a href="{{ url('centrosalud/confirma/'.$f->id_cen) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

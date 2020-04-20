@@ -9,9 +9,11 @@
                     <div class="card-header text-right">
                         <h3 class="card-title">AREA: {{ $titulo }}</h3>
                         {{-- Boton de Nuevo --}}
+                        @can('cargo-create')
                         <a href="{{ url('cargo/nuevo/'.$id) }}" class="btn btn-info">
                             <i class="fas fa-plus"></i>
                         </a>
+                        @endcan
                         {{-- Boton de Busqueda de Area --}}
                         <a href="{{ url('area/buscar') }}" class="btn btn-danger">
                             <i class="fas fa-arrow-left"></i>
@@ -24,7 +26,9 @@
                                 <tr>
                                     <th>Cargo</th>
                                     <th>Estado</th>
+                                    @can('cargo-edit' && 'cargo-delete')
                                     <th>Acciones</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,13 +44,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('cargo-edit')
                                         <a href="{{ url('cargo/editar/'.$f->id_car.'/'.$id) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('cargo-delete')
                                         <a href="{{ url('cargo/confirma/'.$f->id_car.'/'.$id) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach
@@ -69,9 +77,11 @@
                     <div class="card-header text-right">
                         <h3 class="card-title">AREA: {{ $titulo }}</h3>
                         {{-- Boton de Nuevo --}}
+                        @can('cargo-create')
                         <a href="{{ url('cargo/nuevo/'.$id) }}" class="btn btn-info">
                             <i class="fas fa-plus"></i>
-                        </a>
+                        </a>    
+                        @endcan
                         {{-- Boton de Busqueda de Area --}}
                         <a href="{{ url('area/buscar') }}" class="btn btn-danger">
                             <i class="fas fa-arrow-left"></i>

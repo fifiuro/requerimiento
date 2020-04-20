@@ -23,9 +23,11 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuveo --}}
+                                @can('contratos-create')
                                 <a href="{{ url('contrato/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -48,7 +50,9 @@
                                     <th style="width: 10px">#</th>
                                     <th>Contrato</th>
                                     <th>Estado</th>
+                                    @can('cotratos-edit' && 'contratos-delete')
                                     <th>Acciones</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,13 +69,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('contratos-edit')
                                         <a href="{{ url('contrato/editar/'.$f->id_con) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('contratos-delete')
                                         <a href="{{ url('contrato/confirma/'.$f->id_con) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

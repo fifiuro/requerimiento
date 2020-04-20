@@ -23,9 +23,11 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuveo --}}
-                                <a href="{{ url('estadocivil/nuevo') }}" class="btn btn-danger">
-                                    <i class="fas fa-plus"></i>
-                                </a>
+                                @can('estadocivil-create')
+                                    <a href="{{ url('estadocivil/nuevo') }}" class="btn btn-danger">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -65,13 +67,17 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
+                                        @can('estadocivil-edit')
                                         <a href="{{ url('estadocivil/editar/'.$f->id_est) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
+                                        @can('estadocivil-delete')
                                         <a href="{{ url('estadocivil/confirma/'.$f->id_est) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach
