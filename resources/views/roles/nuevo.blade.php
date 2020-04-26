@@ -20,7 +20,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <strong>Permiso:</strong>
+                        <label for="permission">Permiso:</label>
                         <br/>
                         <?php $col = 1; ?>
                         <table class="table table-striped table-bordered">

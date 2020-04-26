@@ -5,16 +5,16 @@
         <div class="col-md-3"></div>
         <div class="card card-info col-md-6">
             <div class="card-header">
-                <h3 class="card-title">ELIMINAR ROL</h3>
+                <h3 class="card-title">ELIMINAR USUARIO</h3>
             </div>
-            <form role="form" method="POST" action="{{ url('roles/eliminar') }}">
+            <form role="form" method="POST" action="{{ url('users/eliminar') }}">
                 @csrf
                 <div class="card-body">
-                    <p>¿Esta seguro de eliminar el Rol?</p>
+                    <p>¿Esta seguro de eliminar el Usuario?</p>
                     <input type="hidden" name="id" value="{{ $id }}">
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">SI</button>
-                    <a href="{{ url('roles/buscar') }}" class="btn btn-danger">NO</a>
+                    <a href="{{ url('users/buscar') }}" class="btn btn-danger">NO</a>
                 </div>
             </form>
         </div>

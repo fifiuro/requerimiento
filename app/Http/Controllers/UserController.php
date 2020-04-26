@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Hash;
+use DB;
 
 class UserController extends Controller
 {
@@ -14,10 +15,43 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:users-list|users-create|users-edit|users-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:users-create', ['only' => ['create','store']]);
+         $this->middleware('permission:users-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:users-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('users.buscar');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $find = User::where('name','like','%'.$request->name.'%')->get();
+
+        if(!is_null($find)){
+            return view('users.buscar')->with('find',$find)
+                                       ->with('estado','1')
+                                       ->with('mensaje','');
+        }else{
+            return view('users.buscar')->with('find',$find)
+                                       ->with('estado','0')
+                                       ->with('mensaje'.'No se tiene resultado para la busqueda:'.$request->name);
+        }
     }
 
     /**
@@ -28,7 +62,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        
+        return view('users.nuevo')->with('roles',$roles);
     }
 
     /**
@@ -51,21 +86,10 @@ class UserController extends Controller
     
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
-    
-        return redirect()->route('users.index')
-                        ->with('success','User created successfully');
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::find($id);
-        return view('users.show',compact('user'));
+        \toastr()->success('Se agrego correctamente el registro.');
+
+        return view('users.buscar');
     }
 
     /**
@@ -76,11 +100,20 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $find = User::find($id);
         $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
-    
-        return view('users.edit',compact('user','roles','userRole'));
+        $userRole = $find->roles->pluck('name','name')->all();
+        
+        if(!is_null($find)){
+            return view('users.editar')->with('find',$find)
+                                       ->with('roles',$roles)
+                                       ->with('userRole',$userRole)
+                                       ->with('mensaje','');
+        }else{
+            \toastr()->error('No se encontro el registro a Modificar.');
+
+            return view('users.buscar');
+        }
     }
 
     /**
@@ -90,11 +123,11 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,'.$request->id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
@@ -103,17 +136,39 @@ class UserController extends Controller
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['passw0rd']);
         }else{
-            // $input = array_except($input, array('password'));
-            $input = Arr::except($input, array('password'));
+            $input = \Arr::except($input, array('password'));
         }
 
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id', $id)->delete();
-        $user->assignRole($request->input('roles'));
+        $user = User::find($request->id);
 
-        return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
+        if(!is_null($user)){
+            $user->update($input);
+            DB::table('model_has_roles')->where('model_id',$request->id)->delete();
+            $user->assignRole($request->input('roles'));
+
+            \toastr()->success('Se modificó correctamente el registro.');
+        }else{
+            \toastr()->success('No se encontro el registro a Modificar.');
+        }
+
+        return view('users.buscar');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm($id)
+    {
+        $find = User::find($id);
+        
+        if(is_null($find)){
+            \toastr()->success('No se encotnro el registro a Eliminar.');
+        }
+
+        return view('users.confirma')->with('id',$find->id);
     }
 
     /**
@@ -122,10 +177,12 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
-        User::find($id)->delete();
-        return redirect()->route('users.index')
-                        ->with('success','User deleted successfully');
+        User::find($request->id)->delete();
+
+        \toastr()->success('Se eliminó correctamente el registro.');
+
+        return view('users.buscar');
     }
 }

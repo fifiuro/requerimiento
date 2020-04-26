@@ -165,11 +165,23 @@ Route::group(['prefix' => 'roles','middleware' => ['auth']], function(){
     Route::post('eliminar', 'RoleController@destroy');
 });
 
+// Rutas USUARIOS
+Route::group(['prefix' => 'users','middleware' => ['auth']], function(){
+    Route::get('buscar', 'UserController@index');
+    Route::post('buscar', 'UserController@show');
+    Route::get('nuevo', 'UserController@create');
+    Route::post('nuevo', 'UserController@store');
+    Route::get('editar/{id}', 'UserController@edit');
+    Route::post('actualizar', 'UserController@update');
+    Route::get('confirma/{id}', 'UserController@confirm');
+    Route::post('eliminar', 'UserController@destroy');
+});
+
 Auth::routes(["register" => false, "reset" => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['auth']], function() {
+/* Route::group(['middleware' => ['auth']], function() {
     //Route::resource('roles','RoleController');
-    Route::resource('users','UserController');
-});
+    //Route::resource('users','UserController');
+}); */

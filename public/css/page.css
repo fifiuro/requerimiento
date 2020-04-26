@@ -48,3 +48,9 @@
     padding: 10%;
     color: #024c45;
 }
+
+body {
+    background-repeat: no-repeat !important;
+    background: url('../images/img/Fondo1.jpg') no-repeat center center fixed !important;
+    background-size: 100% 100% !important;
+}

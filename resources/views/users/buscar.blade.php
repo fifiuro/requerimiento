@@ -1,20 +1,19 @@
-@extends('template.base')
+@extends('template/base')
 
 @section('content')
     <div class="row">
         <div class="card card-info col-md-12">
             <div class="card-header">
-                <h3 class="card-title">BUSCAR ROL</h3>
+                <h3 class="card-title">BUSCAR USUARIO</h3>
             </div>
-    
-            <form role="form" method="POST" action="{{ url('roles') }}">
+            <form role="form" method="POST" action="{{ url('users/buscar') }}">
                 @csrf
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-11">
                             <div class="form-group">
-                                <label for="rol">Rol</label>
-                                <input autofocus type="text" name="rol" class="form-control" id="rol" placeholder="Esriba el Rol a Buscar">
+                                <label for="name">Nombre de Usuario</label>
+                                <input autofocus type="text" name="name" class="form-control" id="name" placeholder="Escriba el Nombre de Usuario">
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -24,8 +23,8 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuevo --}}
-                                @can('estadocivil-create')
-                                    <a href="{{ url('roles/create') }}" class="btn btn-danger">
+                                @can('users-create')
+                                    <a href="{{ url('users/nuevo') }}" class="btn btn-danger">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 @endcan
@@ -49,8 +48,10 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Estado Civil</th>
-                                    @canany(['estadocivil-edit','estadocivil-delete'])
+                                    <th>Nombre</th>
+                                    <th>Correo Electrónico</th>
+                                    <th>Rol</th>
+                                    @canany(['users-edit','users-delete'])
                                     <th>Acciones</th>
                                     @endcanany
                                 </tr>
@@ -60,16 +61,25 @@
                                 <tr>
                                     <td>{{ $f->id }}</td>
                                     <td>{{ $f->name }}</td>
+                                    <td>{{ $f->email }}</td>
+                                    <td>{{ $f->name }}</td>
+                                    <td>
+                                        @if(!empty($f->getRoleNames()))
+                                            @foreach($f->getRoleNames() as $v)
+                                                <label class="badge badge-success">{{ $v }}</label>
+                                            @endforeach
+                                        @endif
+                                    </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
-                                        @can('estadocivil-edit')
-                                        <a href="{{ url('roles/'.$f->id.'/edit') }}" class="btn btn-warning">
+                                        @can('users-edit')
+                                        <a href="{{ url('users/editar/'.$f->id) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         @endcan
                                         {{-- Boton de Eliminar --}}
-                                        @can('estadocivil-delete')
-                                        <a href="{{ url('estadocivil/confirma/'.$f->id) }}" class="btn btn-danger">
+                                        @can('users-delete')
+                                        <a href="{{ url('users/confirma/'.$f->id) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
                                         @endcan
@@ -94,4 +104,8 @@
             </div>
         @endif
     @endisset
-@endsection
+@stop
+
+@section('extra')
+    
+@stop

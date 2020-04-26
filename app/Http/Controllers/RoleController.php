@@ -14,13 +14,14 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /* function __construct()
+    function __construct()
     {
          $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
          $this->middleware('permission:role-create', ['only' => ['create','store']]);
          $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    } */
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -95,10 +96,11 @@ class RoleController extends Controller
     {
         $find = Role::find($id);
         $permission = Permission::get();
+
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
-    
+                             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
+                             ->all();
+        
         if(!is_null($find)){
             return view('roles.editar')->with('find', $find)
                                        ->with('permission', $permission)
@@ -124,10 +126,10 @@ class RoleController extends Controller
             'name' => 'required',
             'permission' => 'required',
         ]);
-    
-        $find = Role::find($request->id);
 
-        if(!is_null($find)){
+        $role = Role::find($request->id);
+
+        if(!is_null($role)){
             $role->name = $request->input('name');
             $role->save();
         
@@ -150,8 +152,8 @@ class RoleController extends Controller
     public function confirm($id)
     {
         $find = Role::find($id);
-
-        if(!is_null($find)){
+        
+        if(is_null($find)){
             \toastr()->success('No se encotnro el registro a Eliminar.');
         }
 
@@ -164,9 +166,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        DB::table("roles")->where('id',$id)->delete();
+        DB::table("roles")->where('id',$request->id)->delete();
+
+        \toastr()->success('Se eliminó correctamente el registro.');
 
         return view('roles.buscar');
     }

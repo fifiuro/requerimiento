@@ -9,6 +9,7 @@
             </div>
             <form role="form" method="POST" action="{{ url('roles/actualizar') }}">
                 @csrf
+                <input type="hidden" name="id" value="{{ $find->id }}">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">Rol *</label>
@@ -20,7 +21,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <strong>Permiso:</strong>
+                        <label for="permission">Permiso:</label>
                         <br/>
                         <?php $col = 1; ?>
                         <table class="table table-striped table-bordered">
@@ -29,31 +30,51 @@
                                     @case(1)
                                         <tr>
                                             <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @if (in_array($value->id, $rolePermissions))
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
+                                                @else
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @endif
                                             </td>
                                             <?php $col = $col + 1; ?>
                                     @break
                                     @case(2)
                                             <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @if (in_array($value->id, $rolePermissions))
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
+                                                @else
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @endif
                                             </td>
                                             <?php $col = $col + 1; ?>
                                     @break
                                     @case(3)
                                             <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @if (in_array($value->id, $rolePermissions))
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
+                                                @else
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @endif
                                             </td>
                                             <?php $col = $col + 1; ?>
                                     @break
                                     @case(4)
                                             <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @if (in_array($value->id, $rolePermissions))
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
+                                                @else
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @endif
                                             </td>
                                             <?php $col = $col + 1; ?>
                                     @break
                                     @case(5)
                                             <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @if (in_array($value->id, $rolePermissions))
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
+                                                @else
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
+                                                @endif
                                             </td>
                                         </tr>
                                         <?php $col = 1; ?>
