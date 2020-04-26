@@ -91,7 +91,7 @@ class estadocivilController extends Controller
     public function edit($id)
     {
         $find = Estadocivil::find($id);
-        //dd($find);
+        
         if(!is_null($find)){
             return view('estadocivil.editar')->with('find', $find)
                                               ->with('mensaje', '');

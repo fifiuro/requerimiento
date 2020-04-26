@@ -1,20 +1,18 @@
 @extends('template/base')
 
-@section('content')
-    
+@section('content')    
     <div class="row">
         <div class="card card-info col-md-12">
             <div class="card-header">
                 <h3 class="card-title">BUSCAR DEPARTAMENTO</h3>
             </div>
-            <form role="form" method="POST" action="{{ url('departamento/buscar') }}">
-                @csrf
+            {{ Form::open(array('url' => 'departamento/buscar')) }}
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-11">
                             <div class="form-group">
-                                <label for="departamento">Departamento</label>
-                                <input type="text" name="departamento" class="form-control" id="departamento" placeholder="Escriba el Departamento">
+                                {{ Form::label('departamento','Departamento')}}
+                                {{ Form::text('departemento', '', ['class' => 'form-control', 'placeholder' => 'Departamento', 'autofocus' => 'true']) }}
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -32,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            {{ Form::close() }}
         </div>
     </div>
     @isset($estado)
@@ -51,7 +49,9 @@
                                     <th>Departamento</th>
                                     <th>Sigla</th>
                                     <th>Estado</th>
+                                    @canany(['departamento-edit','departamento-delete'])
                                     <th>Acciones</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>

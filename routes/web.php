@@ -152,12 +152,24 @@ Route::group(['prefix' => 'requerimiento','middleware' => ['auth']], function(){
     Route::get('confirma/{id}', 'requerimientoController@confirm');
     Route::post('eliminar', 'requerimientoController@destroy');
 });
-Auth::routes();
+
+// Rutas ROLES
+Route::group(['prefix' => 'roles','middleware' => ['auth']], function(){
+    Route::get('buscar', 'RoleController@index');
+    Route::post('buscar', 'RoleController@show');
+    Route::get('nuevo', 'RoleController@create');
+    Route::post('nuevo', 'RoleController@store');
+    Route::get('editar/{id}', 'RoleController@edit');
+    Route::post('actualizar', 'RoleController@update');
+    Route::get('confirma/{id}', 'RoleController@confirm');
+    Route::post('eliminar', 'RoleController@destroy');
+});
+
+Auth::routes(["register" => false, "reset" => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles','RoleController');
+    //Route::resource('roles','RoleController');
     Route::resource('users','UserController');
 });
-

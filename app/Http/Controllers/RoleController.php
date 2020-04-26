@@ -14,13 +14,13 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    /* function __construct()
     {
          $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
          $this->middleware('permission:role-create', ['only' => ['create','store']]);
          $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
+    } */
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +28,28 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('roles.buscar');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $find = Role::where('name','like','%'.$request->rol.'%')->get();
+
+        if(!is_null($find)){
+            return view('roles.buscar')->with('find', $find)
+                                       ->with('estado', '1')
+                                       ->with('mensaje', '');
+        }else{
+            return view('roles.buscar')->with('find', $find)
+                                       ->with('estado', '0')
+                                       ->with('mensaje', 'No se tiene resultado para ls busqueda: '.$request->rol);
+        }
     }
 
     /**
@@ -40,8 +59,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
-        return view('roles.create',compact('permission'));
+        $permission = Permission::orderBy('name','ASC')->get();
+
+        return view('roles.nuevo')->with('permission',$permission);
     }
 
     /**
@@ -59,25 +79,10 @@ class RoleController extends Controller
     
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
-    
-        return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
-            ->get();
-    
-        return view('roles.show',compact('role','rolePermissions'));
+        \toastr()->success('Se agrego correctamente el registro.');
+
+        return view('roles.buscar');
     }
 
     /**
@@ -88,13 +93,22 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
+        $find = Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
     
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        if(!is_null($find)){
+            return view('roles.editar')->with('find', $find)
+                                       ->with('permission', $permission)
+                                       ->with('rolePermissions', $rolePermissions)
+                                       ->with('mensaje', '');
+        }else{
+            \toastr()->error('No se encontro el registro a Modificar.');
+
+            return view('roles.buscar');
+        }
     }
 
     /**
@@ -104,21 +118,44 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
             'permission' => 'required',
         ]);
     
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
+        $find = Role::find($request->id);
+
+        if(!is_null($find)){
+            $role->name = $request->input('name');
+            $role->save();
+        
+            $role->syncPermissions($request->input('permission'));
+
+            \toastr()->success('Se modificó correctamente el registro.');
+        }else{
+            \toastr()->success('No se encontro el registro a Modificar.');
+        }
     
-        $role->syncPermissions($request->input('permission'));
-    
-        return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+        return view('roles.buscar');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm($id)
+    {
+        $find = Role::find($id);
+
+        if(!is_null($find)){
+            \toastr()->success('No se encotnro el registro a Eliminar.');
+        }
+
+        return view('roles.confirma')->with('id',$find->id);
     }
 
     /**
@@ -130,7 +167,7 @@ class RoleController extends Controller
     public function destroy($id)
     {
         DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-                        ->with('success','Role deleted successfully');
+
+        return view('roles.buscar');
     }
 }

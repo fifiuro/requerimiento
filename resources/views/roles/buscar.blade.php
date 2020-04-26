@@ -1,29 +1,31 @@
-@extends('template/base')
+@extends('template.base')
 
 @section('content')
     <div class="row">
         <div class="card card-info col-md-12">
             <div class="card-header">
-                <h3 class="card-title">BUSCAR ESTADO CIVIL</h3>
+                <h3 class="card-title">BUSCAR ROL</h3>
             </div>
-            <form role="form" method="POST" action="{{ url('estadocivil/buscar') }}">
+    
+            <form role="form" method="POST" action="{{ url('roles/buscar') }}">
                 @csrf
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-11">
                             <div class="form-group">
-                                <label for="estadocivil">Estado Civil</label>
-                                <input autofocus type="text" name="estadocivil" class="form-control" id="estadocivil" placeholder="Escriba el Estado Civil">
+                                <label for="rol">Rol</label>
+                                <input autofocus type="text" name="rol" class="form-control" id="rol" placeholder="Esriba el Rol a Buscar">
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group text-center">
+                                {{-- Boton de Buscar --}}
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
+                                {{-- Boton de Nuevo --}}
                                 @can('estadocivil-create')
-                                    <a href="{{ url('estadocivil/nuevo') }}" class="btn btn-danger">
+                                    <a href="{{ url('roles/nuevo') }}" class="btn btn-danger">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 @endcan
@@ -48,7 +50,6 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th>Estado Civil</th>
-                                    <th>Estado</th>
                                     @canany(['estadocivil-edit','estadocivil-delete'])
                                     <th>Acciones</th>
                                     @endcanany
@@ -57,25 +58,18 @@
                             <tbody>
                                 @foreach ($find as $f)
                                 <tr>
-                                    <td>{{ $f->id_est }}</td>
-                                    <td>{{ $f->estado_civil }}</td>
-                                    <td>
-                                        @if ($f->estado == 1)
-                                            <i class="fas fa-check" style="color:green"></i>
-                                        @else
-                                            <i class="fas fa-times" style="color:red"></i>
-                                        @endif
-                                    </td>
+                                    <td>{{ $f->id }}</td>
+                                    <td>{{ $f->name }}</td>
                                     <td>
                                         {{-- Boton de Modificar --}}
                                         @can('estadocivil-edit')
-                                        <a href="{{ url('estadocivil/editar/'.$f->id_est) }}" class="btn btn-warning">
+                                        <a href="{{ url('roles/editar/'.$f->id) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         @endcan
                                         {{-- Boton de Eliminar --}}
                                         @can('estadocivil-delete')
-                                        <a href="{{ url('estadocivil/confirma/'.$f->id_est) }}" class="btn btn-danger">
+                                        <a href="{{ url('roles/confirma/'.$f->id) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
                                         @endcan
@@ -100,8 +94,4 @@
             </div>
         @endif
     @endisset
-@stop
-
-@section('extra')
-    
-@stop
+@endsection

@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="nombre">Nombre AFP *</label>
-                        <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Escriba nombre AFP" value="{{ $find->nombre }}" maxlength="255" required>
+                        <input autofocus type="text" name="nombre" class="form-control" id="nombre" placeholder="Escriba nombre AFP" value="{{ $find->nombre }}" maxlength="255" required>
                         @if ($errors->has('nombre'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('nombre') }}

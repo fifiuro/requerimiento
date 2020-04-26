@@ -1,50 +1,97 @@
-@extends('template/base')
+@extends('template.base')
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Administracion de Rol</h2>
+        <div class="card card-info col-md-12">
+            <div class="card-header">
+                <h3 class="card-title">BUSCAR ROL</h3>
             </div>
-            <div class="pull-right">
-            @can('role-create')
-                <a class="btn btn-success" href="{{ route('roles.create') }}"> Crear Nuevo Rol</a>
-                @endcan
-            </div>
+    
+            <form role="form" method="POST" action="{{ url('roles') }}">
+                @csrf
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label for="rol">Rol</label>
+                                <input autofocus type="text" name="rol" class="form-control" id="rol" placeholder="Esriba el Rol a Buscar">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group text-center">
+                                {{-- Boton de Buscar --}}
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                {{-- Boton de Nuevo --}}
+                                @can('estadocivil-create')
+                                    <a href="{{ url('roles/create') }}" class="btn btn-danger">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                @endcan
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
-    <table class="table table-bordered">
-    <tr>
-        <th>No</th>
-        <th>Nombre</th>
-        <th width="280px">Acción</th>
-    </tr>
-        @foreach ($roles as $key => $role)
-        <tr>
-            <td>{{ ++$i }}</td>
-            <td>{{ $role->name }}</td>
-            <td>
-                <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Mostrar</a>
-                @can('role-edit')
-                    <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Editar</a>
-                @endcan
-                @can('role-delete')
-                    {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
-                @endcan
-            </td>
-        </tr>
-        @endforeach
-    </table>
-
-    {!! $roles->render() !!}
-
+    @isset($estado)
+        @if ($estado == 1)
+            <div class="row">
+                <div class="card card-info col-md-12">
+                    <div class="card-header">
+                        <h3 class="card-title">Resultado de la busqueda</h3>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Estado Civil</th>
+                                    @canany(['estadocivil-edit','estadocivil-delete'])
+                                    <th>Acciones</th>
+                                    @endcanany
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($find as $f)
+                                <tr>
+                                    <td>{{ $f->id }}</td>
+                                    <td>{{ $f->name }}</td>
+                                    <td>
+                                        {{-- Boton de Modificar --}}
+                                        @can('estadocivil-edit')
+                                        <a href="{{ url('roles/'.$f->id.'/edit') }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        @endcan
+                                        {{-- Boton de Eliminar --}}
+                                        @can('estadocivil-delete')
+                                        <a href="{{ url('estadocivil/confirma/'.$f->id) }}" class="btn btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                        @endcan
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @elseif($estado == 0)
+            <div class="row">
+                <div class="card card-info col-md-12">
+                    <div class="card-header">
+                        <h3 class="card-title">Resultado de la busqueda</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <h3>{{ $mensaje }}</h3>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endisset
 @endsection

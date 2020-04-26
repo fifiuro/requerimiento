@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="id_are">Area *</label>
-                        <select name="id_are" id="id_are" class="form-control" required>
+                        <select autofocus name="id_are" id="id_are" class="form-control" required>
                             @foreach ($area as $a)
                                 <option value="{{ $a->id_are }}">{{ $a->tipo }}</option>
                             @endforeach

@@ -14,7 +14,7 @@
                         <div class="col-md-11">
                             <div class="form-group">
                                 <label for="afp">AFP</label>
-                                <input type="text" name="afp" class="form-control" id="afp" placeholder="Escriba el AFP">
+                                <input autofocus type="text" name="afp" class="form-control" id="afp" placeholder="Escriba el AFP">
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -50,9 +50,9 @@
                                     <th style="width: 10px">#</th>
                                     <th>AFP</th>
                                     <th>Estado</th>
-                                    @can('afp-edit' && 'afp-delete')
+                                    @canany(['afp-edit', 'afp-delete'])
                                         <th>Acciones</th>
-                                    @endcan
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>

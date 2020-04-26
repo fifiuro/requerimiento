@@ -14,7 +14,7 @@
                         <div class="col-md-11">
                             <div class="form-group">
                                 <label for="nivel">Nivel</label>
-                                <input type="text" name="hora" class="form-control" id="hora" placeholder="Escriba la Nivel">
+                                <input autofocus type="text" name="hora" class="form-control" id="hora" placeholder="Escriba la Nivel">
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -23,7 +23,7 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuevo --}}
-                                @can('nivel-create')
+                                @can('niveles-create')
                                 <a href="{{ url('nivel/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>
@@ -55,9 +55,9 @@
                                     <th>Salario</th>
                                     <th>Literal</th>
                                     <th>Estado</th>
-                                    @can('nivel-edit' || 'nivel-delete')
+                                    @canany(['niveles-edit','niveles-delete'])
                                     <th>Acciones</th>
-                                    @endcan
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,13 +79,13 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
-                                        @can('nivel-edit')
+                                        @can('niveles-edit')
                                         <a href="{{ url('nivel/editar/'.$f->id_niv) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>                                            
                                         @endcan
                                         {{-- Boton de Eliminar --}}
-                                        @can('nivel-delete')
+                                        @can('niveles-confirma')
                                         <a href="{{ url('nivel/confirma/'.$f->id_niv) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>    

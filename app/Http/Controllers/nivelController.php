@@ -16,10 +16,10 @@ class nivelController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:cargo-list|cargo-create|cargo-edit|cargo-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:cargo-create', ['only' => ['create','store']]);
-         $this->middleware('permission:cargo-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:cargo-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:niveles-list|niveles-create|niveles-edit|niveles-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:niveles-create', ['only' => ['create','store']]);
+         $this->middleware('permission:niveles-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:niveles-delete', ['only' => ['destroy']]);
     }
 
     /**

@@ -146,7 +146,11 @@ class requerimientoController extends Controller
         $date2 = date('d/m/Y',strtotime($find[0]->fecha_fin));
         $find[0]->fecha_fin1 = $date2;
 
-        $req = explode('-',$requisito[0]->documento);
+        if(count($requisito) > 0) {
+            $req = explode('-',$requisito[0]->documento);
+        }else{
+            $req = [];
+        }
 
         if(!is_null($find)){
             return view('requerimiento.editar')->with('find',$find[0])

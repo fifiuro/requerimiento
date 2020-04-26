@@ -48,15 +48,23 @@
       </li>
     </ul>
 
-    <a class="dropdown-item" href="{{ route('logout') }}"
-        onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();">
-        {{ __('Cerrar Sesión') }}
-    </a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+          {{ Auth::user()->name }} <span class="caret"></span>
+        </a>
 
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              Cerrar Sesion
+          </a>
+          
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
+        </div>
+      </li>
+    </ul>
   </nav>
   <!-- /.navbar -->
 
@@ -74,9 +82,11 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+          <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+          @canany(['departamento-list', 'estadocivil-list', 'afp-list', 'centrosalud-list', 'contratos-list', 'documentos-lis', 'areacargo-list', 'niveles-list'])
           <li class="nav-header">CONFIGURACION</li>
+          @endcanany
+          @can('departamento-list')
           <li class="nav-item">
             <a href="{{ url('departamento/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -85,6 +95,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('estadocivil-list')
           <li class="nav-item">
             <a href="{{ url('estadocivil/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -93,6 +105,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('afp-list')
           <li class="nav-item">
             <a href="{{ url('afp/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -101,6 +115,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('centrosalud-list')
           <li class="nav-item">
             <a href="{{ url('centrosalud/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -109,6 +125,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('contratos-list')
           <li class="nav-item">
             <a href="{{ url('contrato/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -117,6 +135,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('documentos-list')
           <li class="nav-item">
             <a href="{{ url('documento/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -125,6 +145,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('areacargo-list')
           <li class="nav-item">
             <a href="{{ url('area/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -133,6 +155,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('niveles-list')
           <li class="nav-item">
             <a href="{{ url('nivel/buscar') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -141,7 +165,26 @@
               </p>
             </a>
           </li>
+          @endcan
+          <li class="nav-header">USUARIOS</li>
+          <li class="nav-item">
+            <a href="{{ url('users') }}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>Nuevo</p>
+            </a>
+          </li>
+          @can('role-list')
+          <li class="nav-item">
+            <a href="{{ url('roles/buscar') }}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>Roles</p>
+            </a>
+          </li>
+          @endcan
+          @canany(['datospersonal-list','requerimiento-list'])
           <li class="nav-header">REQUERIMIENTOS</li>
+          @endcanany
+          @can('datospersonal-list')
           <li class="nav-item">
             <a href="{{ url('personal/buscar') }}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
@@ -150,6 +193,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('requerimiento-list')
           <li class="nav-item">
             <a href="{{ url('requerimiento/buscar') }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
@@ -158,6 +203,7 @@
               </p>
             </a>
           </li>
+          @endcan
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
