@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label for="cargo">Cargo *</label>
-                        <input type="text" name="cargo" class="form-control" id="cargo" placeholder="Escriba el Cargo" value="{{ old('cargo') }}" maxlength="255" required>
+                        <input type="text" name="cargo" class="form-control" id="cargo" placeholder="Escriba el Cargo" value="{{ old('cargo') }}" maxlength="255" autofocus required>
                         @if ($errors->has('cargo'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('cargo') }}

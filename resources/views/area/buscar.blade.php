@@ -19,11 +19,12 @@
                         </div>
                         <div class="col-md-1">
                             <div class="form-group text-center">
+                                {{-- Boton de Buscar --}}
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
-                                @can('area-create', Model::class)
+                                {{-- Boton de Nuevo --}}
+                                @can('areacargo-create', Model::class)
                                 <a href="{{ url('area/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>

@@ -13,6 +13,19 @@ class documentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:documentos-list|documentos-create|documentos-edit|documentos-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:documentos-create', ['only' => ['create','store']]);
+         $this->middleware('permission:documentos-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:documentos-delete', ['only' => ['destroy']]);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('documento.buscar');

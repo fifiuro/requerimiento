@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="codigo">Código *</label>
-                        <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Escriba Código" value="{{ old('codigo') }}" maxlength="10" required>
+                        <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Escriba Código" value="{{ old('codigo') }}" maxlength="10" autofocus required>
                         @if ($errors->has('codigo'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('codigo') }}

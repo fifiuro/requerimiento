@@ -14,7 +14,7 @@
                         <div class="col-md-11">
                             <div class="form-group">
                                 <label for="nivel">Nivel</label>
-                                <input autofocus type="text" name="hora" class="form-control" id="hora" placeholder="Escriba la Nivel">
+                                <input autofocus type="text" name="nivel" class="form-control" id="nivel" placeholder="Escriba la Nivel">
                             </div>
                         </div>
                         <div class="col-md-1">

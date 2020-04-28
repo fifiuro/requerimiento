@@ -78,8 +78,10 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
     
+        $r = explode(',',$request->input('permission'));
+
         $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $role->syncPermissions($r);
 
         \toastr()->success('Se agrego correctamente el registro.');
 
@@ -127,13 +129,14 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
 
+        $r = explode(',',$request->input('permission'));
         $role = Role::find($request->id);
 
         if(!is_null($role)){
             $role->name = $request->input('name');
             $role->save();
         
-            $role->syncPermissions($request->input('permission'));
+            $role->syncPermissions($r);
 
             \toastr()->success('Se modificó correctamente el registro.');
         }else{

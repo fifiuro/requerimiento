@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="ci">CI *</label>
                             <input type="text" name="ci" class="form-control" id="ci" placeholder="Escriba CI" value="{{ old('ci') }}" maxlength="20" required>
                             @if ($errors->has('ci'))
@@ -48,7 +48,7 @@
                                 </small>
                             @endif
                         </div>
-                        <div class="form-grou col-md-6">
+                        <div class="form-grou col-md-4">
                             <label for="id_dep">Expedido *</label>
                             <select name="id_dep" id="id_dep" class="form-control">
                                 @foreach ($departamento as $d)
@@ -61,8 +61,6 @@
                                 </small>
                             @endif
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-md-4">
                             <label for="matricula">Matricula *</label>
                             <input type="text" name="matricula" class="form-control" id="matricula" placeholder="Escriba Matricula" value="{{ old('matricula') }}" maxlength="50" required>
@@ -72,6 +70,8 @@
                                 </small>
                             @endif
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-4">
                             <label for="id_est">Estado Civil *</label>
                             <select name="id_est" id="id_est" class="form-control">
@@ -98,9 +98,7 @@
                                 </small>
                             @endif
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="telefono">Teléfono *</label>
                             <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Escriba Teléfono" value="{{ old('telefono') }}" maxlength="50" required>
                             @if ($errors->has('telefono'))
@@ -109,6 +107,8 @@
                                 </small>
                             @endif
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-6">
                             <label for="celular">Celular *</label>
                             <input type="text" name="celular" class="form-control" id="celular" placeholder="Escriba Celular" value="{{ old('celular') }}" maxlength="50" required>
@@ -118,19 +118,19 @@
                                 </small>
                             @endif
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Correo Electrónico *</label>
-                        <input type="text" name="email" class="form-control" id="email" placeholder="Escriba Correo Electrónico" value="{{ old('email') }}" maxlength="100" required>
-                        @if ($errors->has('email'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('email') }}
-                            </small>
-                        @endif
+                        <div class="form-group col-md-6">
+                            <label for="email">Correo Electrónico *</label>
+                            <input type="text" name="email" class="form-control" id="email" placeholder="Correo Electrónico" value="{{ old('email') }}" maxlength="100" required>
+                            @if ($errors->has('email'))
+                                <small class="form-text text-danger">
+                                    {{ $errors->first('email') }}
+                                </small>
+                            @endif
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="domicilio">Domicilio *</label>
-                        <textarea name="domicilio" id="domicilio" cols="30" rows="3" class="form-control" required>{{ old('domicilio') }}</textarea>
+                        <textarea name="domicilio" id="domicilio" cols="30" rows="3" class="form-control" placeholder="Domicilio" required>{{ old('domicilio') }}</textarea>
                         @if ($errors->has('domicilio'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('domicilio') }}

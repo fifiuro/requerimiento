@@ -20,76 +20,47 @@
                             </small>
                         @endif
                     </div>
-                    <div class="form-group">
-                        <label for="permission">Permiso:</label>
-                        <br/>
-                        <?php $col = 1; ?>
-                        <table class="table table-striped table-bordered">
-                            @foreach($permission as $value)
-                                @switch($col)
-                                    @case(1)
-                                        <tr>
-                                            <td>
-                                                @if (in_array($value->id, $rolePermissions))
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
-                                                @else
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                                @endif
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(2)
-                                            <td>
-                                                @if (in_array($value->id, $rolePermissions))
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
-                                                @else
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                                @endif
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(3)
-                                            <td>
-                                                @if (in_array($value->id, $rolePermissions))
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
-                                                @else
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                                @endif
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(4)
-                                            <td>
-                                                @if (in_array($value->id, $rolePermissions))
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
-                                                @else
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                                @endif
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(5)
-                                            <td>
-                                                @if (in_array($value->id, $rolePermissions))
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'checked' => true)) }} {{ $value->name }}</label>
-                                                @else
-                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <?php $col = 1; ?>
-                                    @break
-                                @endswitch
-                            @endforeach
-                        </table>
+                    {{--  LISTA DUAL PARA SELECCION DE ROLES  --}}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <select class="duallistbox" multiple="multiple" row="10">
+                                    @foreach ($permission as $p)
+                                        @if (in_array($p->id, $rolePermissions))
+                                            <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
+                                        @else
+                                            <option value="{{ $p->id }}">{{ $p->name }}</option>    
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="permission" id="rol" value="<?php echo implode(',',$rolePermissions) ?>" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">GUARDAR</button>
+                    <button type="submit" class="btn btn-primary">EDITAR</button>
                     <a href="{{ url('roles/buscar') }}" class="btn btn-danger">CANCELAR</a>
                 </div>
             </form>
         </div>
         <div class="col-md-1"></div>
     </div>
+@stop
+
+@section('extra')
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox({
+        selectorMinimalHeight: 300,
+        infoText: false,
+        infoTextEmpty: "Lista Vacia",
+        filterPlaceHolder: "Rol a Buscar",
+        moveAllLabel: "Mover Todo",
+        removeAllLabel: "Borrar todo"
+    });
+    //Agrega los elementos seleccionados
+    $('.duallistbox').on('change',function(e){
+        var newState = $(this).val();
+        $("#rol").val(newState);
+    });
 @stop

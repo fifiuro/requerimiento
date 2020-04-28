@@ -34,7 +34,7 @@ class ValidarRequrimientoRequest extends FormRequest
             'fecha_fin' => 'required|date',
             'nota_requerimiento' => 'required|min:1|max:50',
             'fecha_nota_requerimiento' => 'required|date',
-            'observaciones' => 'required|min:1|max:255'
+            'observaciones' => 'max:255'
         ];
     }
 
@@ -73,8 +73,6 @@ class ValidarRequrimientoRequest extends FormRequest
             'fecha_nota_requerimiento.required' => 'La :attribute es obligatorio',
             'fecha_nota_requerimiento.date' => 'La :attribute tiene que tener el formato fecha: YYYY-MM-DD',
 
-            'observaciones.required' => 'La :attribute es obligatorio.',
-            'observaciones.min' => 'La :attribute debe contener mas de una letra.',
             'observaciones.max' => 'La :attribute debe contener maximo 255 letras.'
 
         ];

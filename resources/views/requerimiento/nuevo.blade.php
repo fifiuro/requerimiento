@@ -26,10 +26,10 @@
                 <div class="row">
                     <div class="col-5 col-sm-3">
                         <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active" id="vert-tabs-personal-tab" data-toggle="pill" href="#vert-tabs-personal" role="tab" aria-controls="vert-tabs-personal" aria-selected="true">1. Datos Personales</a>
-                            <a class="nav-link" id="vert-tabs-contrato-tab" data-toggle="pill" href="#vert-tabs-contrato" role="tab" aria-controls="vert-tabs-contrato" aria-selected="false">2. Contrato</a>
-                            <a class="nav-link" id="vert-tabs-requerimiento-tab" data-toggle="pill" href="#vert-tabs-requerimiento" role="tab" aria-controls="vert-tabs-requerimiento" aria-selected="false">3. Nota Requerimiento</a>
-                            <a class="nav-link" id="vert-tabs-documento-tab" data-toggle="pill" href="#vert-tabs-documento" role="tab" aria-controls="vert-tabs-documento" aria-selected="false">4. Documentos</a>
+                            <a class="nav-link active" id="vert-tabs-personal-tab" data-toggle="pill" href="#vert-tabs-personal" role="tab" aria-controls="vert-tabs-personal" aria-selected="true">1. DATOS PRESONALES</a>
+                            <a class="nav-link" id="vert-tabs-contrato-tab" data-toggle="pill" href="#vert-tabs-contrato" role="tab" aria-controls="vert-tabs-contrato" aria-selected="false">2. CONTRATO</a>
+                            <a class="nav-link" id="vert-tabs-requerimiento-tab" data-toggle="pill" href="#vert-tabs-requerimiento" role="tab" aria-controls="vert-tabs-requerimiento" aria-selected="false">3. NOTA REQUERIMIENTO</a>
+                            <a class="nav-link" id="vert-tabs-documento-tab" data-toggle="pill" href="#vert-tabs-documento" role="tab" aria-controls="vert-tabs-documento" aria-selected="false">4. DOCUMENTOS</a>
                         </div>
                     </div>
                     <div class="col-7 col-sm-9">
@@ -41,7 +41,7 @@
                                     <div id="buscador" class="row" style="display: flex">
                                         <div class="col-md-11">
                                             <div class="form-group">
-                                                <label for="nombre">Nombre / Paterno / Materno</label>
+                                                <label for="nombre">NOMBRE / PATERNO / MATERNO</label>
                                                 <input type="text" class="form-control" id="nombre" placeholder="Escriba Nombre / Paterno / Materno">
                                             </div>
                                         </div>
@@ -108,8 +108,9 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label for="id_cen">Centro de Salud *</label>
+                                            <label for="id_cen">CENTRO DE SALUD *</label>
                                             <select name="id_cen" id="id_cen" class="form-control" required>
+                                                <option value=""></option>
                                                 @foreach ($centro as $cs)
                                                     <option value="{{ $cs->id_cen }}">{{ $cs->nombre }}</option>
                                                 @endforeach
@@ -121,8 +122,9 @@
                                             @endif
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="id_con">Tipo de Contrato *</label>
+                                            <label for="id_con">TIPO DE CONTRATO *</label>
                                             <select name="id_con" id="id_con" class="form-control" required>>
+                                                <option value=""></option>
                                                 @foreach ($contrato as $c)
                                                     <option value="{{ $c->id_con }}">{{ $c->contrato }}</option>
                                                 @endforeach
@@ -135,7 +137,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="id_are">Tipo de Cargo *</label>
+                                        <label for="id_are">TIPO DE CARGO *</label>
                                         <select id="id_are" class="form-control" required>
                                             <option value=""></option>
                                             @foreach ($area as $a)
@@ -144,8 +146,8 @@
                                         </select>
                                     </div>
                                     <div id="cargo_nivel" class="row" style="display: none">
-                                        <div class="form-group col-md-6">
-                                            <label for="id_car">Cargo *</label>
+                                        <div class="form-group col-md-4">
+                                            <label for="id_car">CARGO *</label>
                                             <select name="id_car" id="id_car" class="form-control" required>
                                                 
                                             </select>
@@ -155,8 +157,8 @@
                                                 </small>
                                             @endif
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="id_niv">Nivel *</label>
+                                        <div class="form-group col-md-4">
+                                            <label for="id_niv">NIVEL *</label>
                                             <select name="id_niv" id="id_niv" class="form-control" required>
                                                 
                                             </select>
@@ -166,8 +168,12 @@
                                                 </small>
                                             @endif
                                         </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="salario">Salario *</label>
+                                            <input type="text" id="salario" value="" class="form-control">
+                                        </div>
                                         <div class="form-group col-md-12">
-                                            <label for="motivo">Motivo de Contrato *</label>
+                                            <label for="motivo">MOTIVIO DE CONTRATO *</label>
                                             <textarea name="motivo" id="motivo" cols="30" rows="3" class="form-control" required></textarea>
                                             @if ($errors->has('motivo'))
                                                 <small class="form-text text-danger">
@@ -176,7 +182,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label for="duracion">Duracion en Fechas:</label>
+                                            <label for="duracion">DURACION EN FECHAS:</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -195,7 +201,7 @@
                             <div class="tab-pane fade" id="vert-tabs-requerimiento" role="tabpanel" aria-labelledby="vert-tabs-requerimiento-tab">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="nota_requerimiento">Nota de Requerimiento *</label>
+                                        <label for="nota_requerimiento">NOTA DE REQUERIMIENTO *</label>
                                         <input type="text" name="nota_requerimiento" id="nota_requerimiento" class="form-control" required>
                                         @if ($errors->has('nota_requerimiento'))
                                             <small class="form-text text-danger">
@@ -204,7 +210,7 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="fecha_nota_requerimiento">Nota de Requerimiento *</label>
+                                        <label for="fecha_nota_requerimiento">FECHA DEREQUERIMIENTO *</label>
                                         <input type="date" name="fecha_nota_requerimiento" id="fecha_nota_requerimiento" class="form-control" required>
                                         @if ($errors->has('fecha_nota_requerimiento'))
                                             <small class="form-text text-danger">
@@ -252,8 +258,8 @@
                                         @endforeach
                                     </table>
                                     <div class="form-group">
-                                        <label for="observaciones">Observaciones *</label>
-                                        <textarea name="observaciones" id="observaciones" cols="30" rows="3" class="form-control" required></textarea>
+                                        <label for="observaciones">OBSERVACIONES *</label>
+                                        <textarea name="observaciones" id="observaciones" cols="30" rows="3" class="form-control"></textarea>
                                         @if ($errors->has('observaciones'))
                                             <small class="form-text text-danger">
                                                 {{ $errors->first('observaciones') }}
@@ -353,6 +359,7 @@
             $("#cargo_nivel").show(1000);
             $('#id_car').html('');
             $('#id_niv').html('');
+            $('#salario').val('');
             // BUSCAR CARGO SEGUN TIPO DE NIVEL
             $.ajax({
                 url: "{{ url('cargo/buscar') }}",
@@ -361,6 +368,7 @@
                 method: "POST",
                 success: function(result)
                 {
+                    $('#id_car').append('<option value=""></option>');
                     $.each(result, function(i,item){
                         $('#id_car').append('<option value="'+result[i].id_car+'">'+result[i].cargo+'</option>');
                     });
@@ -381,8 +389,9 @@
                 method: "POST",
                 success: function(result)
                 {
+                    $('#id_niv').append('<option value=""></option>')
                     $.each(result, function(i,item){
-                        $('#id_niv').append('<option value="'+result[i].id_niv+'">'+result[i].nivel+', '+result[i].horas+' hrs.'+', '+result[i].tiempo+'</option>');
+                        $('#id_niv').append('<option value="'+result[i].id_niv+'" data-sal="'+result[i].salario+'">'+result[i].nivel+', '+result[i].horas+' hrs.'+', '+result[i].tiempo+'</option>');
                     });
                     $('#loader').css('display','none');
                 },
@@ -394,5 +403,10 @@
                 }
             });
         }
+    });
+
+    $('#id_niv').on('change',function(){
+        var sal = $('option:selected', $(this)).attr('data-sal');
+        $('#salario').val(sal);
     });
 @stop

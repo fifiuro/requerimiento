@@ -34,6 +34,8 @@
   <link rel="stylesheet" href="{{ asset('css/page.css') }}">
   {{-- Tipo de Letra --}}
   <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-duallistbox.min.css') }}">
   
 </head>
 <body class="hold-transition sidebar-mini layout-fixed @if (!Auth::check()) login-page @endif">
@@ -274,6 +276,8 @@
 <!-- DataTables -->
 <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.js') }}"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="{{ asset('js/jquery.bootstrap-duallistbox.min.js') }}"></script>
 
 @toastr_render
 <script>

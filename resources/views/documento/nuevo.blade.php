@@ -11,8 +11,8 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="documento">Documento *</label>
-                        <input type="text" name="documento" class="form-control" id="documento" placeholder="Escriba el nombre del Documento" value="{{ old('documento') }}" maxlength="255" required>
+                        <label for="documento">DOCUMENTO *</label>
+                        <input type="text" name="documento" class="form-control" id="documento" placeholder="Escriba el nombre del Documento" value="{{ old('documento') }}" maxlength="255" required autofocus>
                         @if ($errors->has('documento'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('documento') }}
@@ -20,7 +20,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                    <label for="estado">Estado *</label>
+                    <label for="estado">ESTADO *</label>
                         <select name="estado" id="estado" class="form-control" required>
                             <option value="1">Activo</option>
                             <option value="0">Desactivado</option>

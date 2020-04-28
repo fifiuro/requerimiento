@@ -28,7 +28,7 @@ class ValidarNivelRequest extends FormRequest
             'id_are' => 'required|exists:areas,id_are',
             'nivel' => 'required|min:1|max:20',
             'horas' => 'required|numeric',
-            'tiempo' => 'required|min:1|max:20',
+            'tiempo' => 'required|min:1|max:50',
             'salario' => 'required|numeric',
             'literal' => 'required|min:1|max:255',
             'estado' => [
@@ -53,7 +53,7 @@ class ValidarNivelRequest extends FormRequest
 
             'tiempo.required' => 'El :attribute es obligatorio.',
             'tiempo.min' => 'El :attribute debe contener mas de una letra.',
-            'tiempo.max' => 'El :attribute debe contener maximo 20 letras.',
+            'tiempo.max' => 'El :attribute debe contener maximo 50 letras.',
 
             'salario.required' => 'El :attribute es obligatorio.',
             'salario.numeric' => 'El :attribute debe contener solo numeros.',

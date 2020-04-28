@@ -19,48 +19,18 @@
                             </small>
                         @endif
                     </div>
-                    <div class="form-group">
-                        <label for="permission">Permiso:</label>
-                        <br/>
-                        <?php $col = 1; ?>
-                        <table class="table table-striped table-bordered">
-                            @foreach($permission as $value)
-                                @switch($col)
-                                    @case(1)
-                                        <tr>
-                                            <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(2)
-                                            <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(3)
-                                            <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(4)
-                                            <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                            </td>
-                                            <?php $col = $col + 1; ?>
-                                    @break
-                                    @case(5)
-                                            <td>
-                                                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }} {{ $value->name }}</label>
-                                            </td>
-                                        </tr>
-                                        <?php $col = 1; ?>
-                                    @break
-                                @endswitch
-                            @endforeach
-                        </table>
+                    {{--  LISTA DUAL PARA SELECCION DE ROLES  --}}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <select class="duallistbox" multiple="multiple" row="10">
+                                    @foreach ($permission as $p)
+                                        <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="permission" id="rol" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -71,4 +41,21 @@
         </div>
         <div class="col-md-1"></div>
     </div>
+@stop
+
+@section('extra')
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox({
+        selectorMinimalHeight: 300,
+        infoText: false,
+        infoTextEmpty: "Lista Vacia",
+        filterPlaceHolder: "Rol a Buscar",
+        moveAllLabel: "Mover Todo",
+        removeAllLabel: "Borrar todo"
+    });
+    //Agrega los elementos seleccionados
+    $('.duallistbox').on('change',function(e){
+        var newState = $(this).val();
+        $("#rol").val(newState);
+    });
 @stop

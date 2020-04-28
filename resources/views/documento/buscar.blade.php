@@ -19,11 +19,12 @@
                         </div>
                         <div class="col-md-1">
                             <div class="form-group text-center">
+                                {{-- Boton de Buscar --}}
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuevo --}}
-                                @can('documento-create')
+                                @can('documentos-create')
                                 <a href="{{ url('documento/nuevo') }}" class="btn btn-danger">
                                     <i class="fas fa-plus"></i>
                                 </a>    
@@ -51,7 +52,7 @@
                                     <th style="width: 10px">#</th>
                                     <th>Documento</th>
                                     <th>Estado</th>
-                                    @can('documento-edit' && 'documento-delete')
+                                    @can('documentos-edit' && 'documentos-delete')
                                     <th>Acciones</th>
                                     @endcan
                                 </tr>
@@ -70,13 +71,13 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
-                                        @can('documento-edit')
+                                        @can('documentos-edit')
                                         <a href="{{ url('documento/editar/'.$f->id_doc) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>    
                                         @endcan
                                         {{-- Boton de Eliminar --}}
-                                        @can('documento-delete')
+                                        @can('documentos-delete')
                                         <a href="{{ url('documento/confirma/'.$f->id_doc) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
