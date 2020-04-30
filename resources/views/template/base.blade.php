@@ -72,7 +72,7 @@
         <!-- Brand Logo -->
         <a href="{{ url('home') }}" class="brand-link">
           <img src="{{ asset('images/img/LogoLight.png') }}" alt="Caja Nacional de Salud" class="brand-image img-circle elevation-3">
-          <span class="brand-text font-weight-light">C.N.S.</span>
+          <span class="brand-text font-weight-light">Caja Nacional de Salud</span>
         </a>
         <!-- Sidebar -->
         <div class="sidebar">

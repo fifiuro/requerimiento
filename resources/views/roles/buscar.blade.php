@@ -24,7 +24,7 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuevo --}}
-                                @can('estadocivil-create')
+                                @can('roles-create')
                                     <a href="{{ url('roles/nuevo') }}" class="btn btn-danger">
                                         <i class="fas fa-plus"></i>
                                     </a>
@@ -50,7 +50,7 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th>Estado Civil</th>
-                                    @canany(['estadocivil-edit','estadocivil-delete'])
+                                    @canany(['roles-edit','roles-delete'])
                                     <th>Acciones</th>
                                     @endcanany
                                 </tr>
@@ -62,13 +62,13 @@
                                     <td>{{ $f->name }}</td>
                                     <td>
                                         {{-- Boton de Modificar --}}
-                                        @can('estadocivil-edit')
+                                        @can('roles-edit')
                                         <a href="{{ url('roles/editar/'.$f->id) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         @endcan
                                         {{-- Boton de Eliminar --}}
-                                        @can('estadocivil-delete')
+                                        @can('roles-delete')
                                         <a href="{{ url('roles/confirma/'.$f->id) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>

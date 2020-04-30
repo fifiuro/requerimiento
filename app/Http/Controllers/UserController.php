@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Hash;
 use DB;
+use App\configuracion\Centrosalud;
 
 class UserController extends Controller
 {
@@ -61,9 +62,11 @@ class UserController extends Controller
      */
     public function create()
     {
+        $centro = Centrosalud::where('estado','=',true)->select('nombre','id_cen')->get();
         $roles = Role::pluck('name','name')->all();
         
-        return view('users.nuevo')->with('roles',$roles);
+        return view('users.nuevo')->with('roles',$roles)
+                                  ->with('centro',$centro);
     }
 
     /**
@@ -75,16 +78,31 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'nombre_usuario' => 'required|unique:users,nombre_usuario',
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'roles' => 'required',
+            'id_cen' => 'required|exists:centro_salud,id_cen'
         ]);
     
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
+
+        /* dd($input["id_cen"]); */
     
-        $user = User::create($input);
+        /* $user = User::create($input); */
+
+        $user = new User;
+
+        $user->nombre_usuario = $input["nombre_usuario"];
+        $user->name = $input["name"];
+        $user->email = $input["email"];
+        $user->password = $input["password"];
+        $user->id_cen = $input["id_cen"];
+
+        $user->save();
+        
         $user->assignRole($request->input('roles'));
 
         \toastr()->success('Se agrego correctamente el registro.');

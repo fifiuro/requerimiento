@@ -62,7 +62,6 @@
                                     <td>{{ $f->id }}</td>
                                     <td>{{ $f->name }}</td>
                                     <td>{{ $f->email }}</td>
-                                    <td>{{ $f->name }}</td>
                                     <td>
                                         @if(!empty($f->getRoleNames()))
                                             @foreach($f->getRoleNames() as $v)

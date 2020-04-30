@@ -73,6 +73,16 @@ class PermissionTableSeeder extends Seeder
             'cargo-edit',
             'cargo-delete',
             'cargo-confirma',
+            'users-list',
+            'users-create',
+            'users-edit',
+            'users-delete',
+            'users-confirma',
+            'roles-list',
+            'roles-create',
+            'roles-edit',
+            'roles-delete',
+            'roles-confirma',
 
         ];
 

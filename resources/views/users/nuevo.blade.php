@@ -24,7 +24,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="name">Nombre:</label>
-                            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                            {!! Form::text('name', null, array('placeholder' => 'Nombre','class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
@@ -35,14 +35,31 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
+                            <label for="nombre_usuario">Nombre de usuario:</label>
+                            {!! Form::text('nombre_usuario', null, array('placeholder' => 'Nombre de Usuario','class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
                             <label for="password">Contraseña:</label>
-                            {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
+                            {!! Form::password('password', array('placeholder' => 'Contraseña','class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="cofirm-password">Confirmar Contraseña:</label>
-                            {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
+                            {!! Form::password('confirm-password', array('placeholder' => 'Confirme Contraseña','class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="cofirm-password">Centro de Salud:</label>
+                            <select name="id_cen" id="id_cen" class="form-control" required>
+                                <option value=""></option>
+                                @foreach ($centro as $c)
+                                    <option value="{{ $c->id_cen }}">{{ $c->nombre }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
