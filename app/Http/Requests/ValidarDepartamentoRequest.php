@@ -25,7 +25,7 @@ class ValidarDepartamentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'departamento' => 'required|min:1|max:15|alpha',
+            'departamento' => 'required|min:1|max:15|string',
             'sigla' => 'required|min:1|max:4|alpha', 
             'estado' => [
                         'required',
@@ -40,7 +40,7 @@ class ValidarDepartamentoRequest extends FormRequest
             'departamento.required' => 'El :attribute es obligatorio.',
             'departamento.min' => 'El :attribute debe contener mas de una letra.',
             'departamento.max' => 'El :attribute debe contener maximo 15 letras.',
-            'departamento.alpha' => 'El :attribute solo debe contener letras.',
+            'departamento.string' => 'El :attribute solo debe contener letras.',
 
             'sigla.required' => 'La :attribute es obligatorio.',
             'sigla.min' => 'La :attribute debe contener más de una letra.',
