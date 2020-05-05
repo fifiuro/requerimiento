@@ -170,7 +170,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="salario">Salario *</label>
-                                            <input type="text" id="salario" value="" class="form-control">
+                                            <input type="text" id="salario" value="" class="form-control" disabled>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="motivo">MOTIVIO DE CONTRATO *</label>
