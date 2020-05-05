@@ -13,8 +13,8 @@
     @endif
 
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="card card-info col-md-6">
+        <div class="col-md-2"></div>
+        <div class="card card-info col-md-8">
             <div class="card-header">
                 <h3 class="card-title">AGREGAR USUARIO</h3>
             </div>
@@ -27,28 +27,32 @@
                             {!! Form::text('name', null, array('placeholder' => 'Nombre','class' => 'form-control')) !!}
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="email">Correo Electronico:</label>
-                            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="email">Correo Electronico:</label>
+                                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="nombre_usuario">Nombre de usuario:</label>
+                                {!! Form::text('nombre_usuario', null, array('placeholder' => 'Nombre de Usuario','class' => 'form-control')) !!}
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="nombre_usuario">Nombre de usuario:</label>
-                            {!! Form::text('nombre_usuario', null, array('placeholder' => 'Nombre de Usuario','class' => 'form-control')) !!}
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="password">Contraseña:</label>
+                                {!! Form::password('password', array('placeholder' => 'Contraseña','class' => 'form-control')) !!}
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="password">Contraseña:</label>
-                            {!! Form::password('password', array('placeholder' => 'Contraseña','class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="cofirm-password">Confirmar Contraseña:</label>
-                            {!! Form::password('confirm-password', array('placeholder' => 'Confirme Contraseña','class' => 'form-control')) !!}
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="cofirm-password">Confirmar Contraseña:</label>
+                                {!! Form::password('confirm-password', array('placeholder' => 'Confirme Contraseña','class' => 'form-control')) !!}
+                            </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
@@ -75,6 +79,6 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-2"></div>
     </div>
 @endsection
