@@ -58,3 +58,7 @@ body {
 label {
     text-transform: uppercase;
 }
+
+.img-logo {
+    width: 55%;
+}

@@ -6,7 +6,8 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">
-                    <img src="{{ asset('images/img/cns.jfif') }}" alt="" srcset="">
+                    <img src="{{ asset('images/img/cns.jfif') }}" class="img-logo">
+                    <br>
                     <b>SISTEMA DE REQUERIMIENTOS</b>
                     <br>
                     Inicia sesión para ingresar al Sistema
