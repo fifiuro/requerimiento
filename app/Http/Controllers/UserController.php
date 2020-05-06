@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:users-list|users-create|users-edit|users-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:users-list|users-create|users-delete', ['only' => ['index','store']]);
          $this->middleware('permission:users-create', ['only' => ['create','store']]);
          $this->middleware('permission:users-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:users-delete', ['only' => ['destroy']]);
@@ -121,11 +121,13 @@ class UserController extends Controller
         $find = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $find->roles->pluck('name','name')->all();
+        $centro = Centrosalud::where('estado','=',true)->select('nombre','id_cen')->get();
         
         if(!is_null($find)){
             return view('users.editar')->with('find',$find)
                                        ->with('roles',$roles)
                                        ->with('userRole',$userRole)
+                                       ->with('centro',$centro)
                                        ->with('mensaje','');
         }else{
             \toastr()->error('No se encontro el registro a Modificar.');
@@ -144,15 +146,15 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
+            'nombre_usuario' => 'required',
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$request->id,
+            'email' => 'required|email',
             'password' => 'same:confirm-password',
-            'roles' => 'required'
         ]);
 
         $input = $request->all();
         if(!empty($input['password'])){
-            $input['password'] = Hash::make($input['passw0rd']);
+            $input['password'] = Hash::make($input['password']);
         }else{
             $input = \Arr::except($input, array('password'));
         }
@@ -160,16 +162,33 @@ class UserController extends Controller
         $user = User::find($request->id);
 
         if(!is_null($user)){
-            $user->update($input);
-            DB::table('model_has_roles')->where('model_id',$request->id)->delete();
-            $user->assignRole($request->input('roles'));
+            if(\Auth::user()->hasRole('Admin')){
+                $user->update($input);
+            }else{
+                $user->nombre_usuario = $input['nombre_usuario'];
+                $user->email = $input['email'];
+                $user->name = $input['name'];
+                if(isset($input['password'])){
+                    $user->password = $input['password'];
+                }
+                $user->save();
+            }
+
+            if(isset($input['roles'])){
+                DB::table('model_has_roles')->where('model_id',$request->id)->delete();
+                $user->assignRole($request->input('roles'));
+            }
 
             \toastr()->success('Se modificó correctamente el registro.');
         }else{
             \toastr()->success('No se encontro el registro a Modificar.');
         }
 
-        return view('users.buscar');
+        if(\Auth::user()->hasRole('Admin')){
+            return view('users.buscar');
+        }else{
+            return view('template.inicio');
+        }
     }
 
     /**
