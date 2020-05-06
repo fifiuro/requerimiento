@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateEstadoCivilSeeder::class);
         $this->call(CreateDepartamentoSeeder::class);
         $this->call(CreateAfpSeeder::class);
+        $this->call(CreateDatosPersonalSeeder::class);
     }
 }

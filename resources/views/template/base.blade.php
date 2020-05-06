@@ -168,14 +168,14 @@
                 </li>
               @endcan
               @canany(['users-list','role-list'])
-                <li class="nav-header">USUARIOS</li>
+                <li class="nav-header">ADMINISTRACION USUARIOS</li>
               @endcanany
               @can('users-list')
                 <li class="nav-item">
                   <a href="{{ url('users/buscar') }}" class="nav-link">
                     <i class="nav-icon far fa-calendar-alt"></i>
                     <p>
-                      Nuevo Usuario
+                      Usuarios
                     </p>
                   </a>
                 </li>
