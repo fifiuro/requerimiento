@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use Hash;
 use DB;
 use App\configuracion\Centrosalud;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -21,7 +22,7 @@ class UserController extends Controller
          $this->middleware('permission:users-list|users-create|users-delete', ['only' => ['index','store']]);
          $this->middleware('permission:users-create', ['only' => ['create','store']]);
          $this->middleware('permission:users-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:users-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:users-delete', ['only' => ['destroy','confirm']]);
     }
 
     /**
@@ -118,6 +119,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        //$id = Crypt::decrypt($id);
+
         $find = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $find->roles->pluck('name','name')->all();
