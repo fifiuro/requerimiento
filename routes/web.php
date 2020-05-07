@@ -177,6 +177,18 @@ Route::group(['prefix' => 'users','middleware' => ['auth']], function(){
     Route::post('eliminar', 'UserController@destroy');
 });
 
+// Rutas PASOS
+Route::group(['prefix' => 'pasos','middleware' => ['auth']], function () {
+    Route::get('buscar', 'PasoController@index');
+    Route::post('buscar', 'PasoController@show');
+    Route::get('nuevo', 'PasoController@create');
+    Route::post('nuevo', 'PasoController@store');
+    Route::get('editar/{id}', 'PasoController@edit');
+    Route::post('actualizar', 'PasoController@update');
+    Route::get('confirma/{id}', 'PasoController@confirm');
+    Route::post('eliminar', 'PasoController@destroy');
+});
+
 Auth::routes(["register" => false, "reset" => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
