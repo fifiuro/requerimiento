@@ -10,6 +10,7 @@ use App\configuracion\Documento;
 use App\configuracion\Cargo;
 use App\configuracion\Nivel;
 use App\requerimiento\Requisito;
+use App\requerimiento\Paso;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarRequrimientoRequest;
@@ -39,10 +40,17 @@ class requerimientoController extends Controller
         $centro = CentroSalud::where('estado','=',true)->get();
         $find = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
                              ->join('centro_salud','centro_salud.id_cen','=','requerimientos.id_cen')
-                             ->where('requerimientos.estado','=',$request->estado.'%')
+                             ->join('pasos','pasos.id_req','=','requerimientos.id_req')
+                             ->where('pasos.estado','=',$request->estado.'%')
                              ->whereOr('datos_personales','like','%'.$request->ci.'%')
-                             ->whereOr('centro_salud','=',$request->centro)
-                             ->select('id_req','centro_salud.nombre as centro','datos_personales.nombre','datos_personales.paterno','datos_personales.materno','requerimientos.estado','nota_requerimiento')
+                             ->where('centro_salud.id_cen','=',$request->centro)
+                             ->select('requerimientos.id_req',
+                                      'centro_salud.nombre as centro',
+                                      'datos_personales.nombre',
+                                      'datos_personales.paterno',
+                                      'datos_personales.materno',
+                                      'pasos.estado',
+                                      'nota_requerimiento')
                              ->get();
         if(!is_null($find)){
             return view('requerimiento.buscar')->with('find', $find)
@@ -112,6 +120,16 @@ class requerimientoController extends Controller
         $requi->estado = true;
 
         $requi->save();
+
+        $paso = new Paso;
+
+        $paso->id_req = $id;
+        $paso->estado = 7;
+        $paso->id_usr = \Auth::user()->id;
+        $paso->fecha = date("Y-m-d");
+        $paso->hora = date("H:i:s");
+        $paso->observaciones = "Nuevo Requerimiento";
+        $paso->save();
 
         \toastr()->success('Se agrego correctamente el registro.');
         
