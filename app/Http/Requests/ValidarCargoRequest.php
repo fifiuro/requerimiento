@@ -37,8 +37,8 @@ class ValidarCargoRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_are' => 'El :attribute es obligatorio.',
-            'id_are' => 'El :attribute debe existir en las Areas registradas.',
+            'id_are.required' => 'El :attribute es obligatorio.',
+            'id_are.exists' => 'El :attribute debe existir en las Areas registradas.',
 
             'cargo.required' => 'El :attribute es obligatorio.',
             'cargo.min' => 'El :attribute debe contener mas de una letra.',

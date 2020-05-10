@@ -179,14 +179,14 @@ Route::group(['prefix' => 'users','middleware' => ['auth']], function(){
 
 // Rutas PASOS
 Route::group(['prefix' => 'pasos','middleware' => ['auth']], function () {
-    Route::get('buscar', 'PasoController@index');
-    Route::post('buscar', 'PasoController@show');
-    Route::get('nuevo', 'PasoController@create');
-    Route::post('nuevo', 'PasoController@store');
-    Route::get('editar/{id}', 'PasoController@edit');
-    Route::post('actualizar', 'PasoController@update');
-    Route::get('confirma/{id}', 'PasoController@confirm');
-    Route::post('eliminar', 'PasoController@destroy');
+    /* Route::get('buscar', 'pasoController@index');
+    Route::post('buscar', 'pasoController@show'); */
+    Route::get('nuevo/{id}', 'pasoController@create');
+    Route::post('nuevo', 'pasoController@store');
+    Route::get('editar/{id}', 'pasoController@edit');
+    Route::post('actualizar', 'pasoController@update');
+    Route::get('confirma/{id}', 'pasoController@confirm');
+    Route::post('eliminar', 'pasoController@destroy');
 });
 
 Auth::routes(["register" => false, "reset" => false]);

@@ -38,12 +38,13 @@ class requerimientoController extends Controller
     public function show(Request $request)
     {
         $centro = CentroSalud::where('estado','=',true)->get();
-        $find = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
+        if($request->estado != '0'){
+            $find = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
                              ->join('centro_salud','centro_salud.id_cen','=','requerimientos.id_cen')
                              ->join('pasos','pasos.id_req','=','requerimientos.id_req')
                              ->where('pasos.estado','=',$request->estado.'%')
-                             ->whereOr('datos_personales','like','%'.$request->ci.'%')
                              ->where('centro_salud.id_cen','=',$request->centro)
+                             ->whereOr('datos_personales.ci','like','%'.$request->ci.'%')
                              ->select('requerimientos.id_req',
                                       'centro_salud.nombre as centro',
                                       'datos_personales.nombre',
@@ -52,6 +53,21 @@ class requerimientoController extends Controller
                                       'pasos.estado',
                                       'nota_requerimiento')
                              ->get();
+        }else{
+            $find = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
+                             ->join('centro_salud','centro_salud.id_cen','=','requerimientos.id_cen')
+                             ->join('pasos','pasos.id_req','=','requerimientos.id_req')
+                             ->where('centro_salud.id_cen','=',$request->centro)
+                             ->whereOr('datos_personales.ci','like','%'.$request->ci.'%')
+                             ->select('requerimientos.id_req',
+                                      'centro_salud.nombre as centro',
+                                      'datos_personales.nombre',
+                                      'datos_personales.paterno',
+                                      'datos_personales.materno',
+                                      'pasos.estado',
+                                      'nota_requerimiento')
+                             ->get();
+        }
         if(!is_null($find)){
             return view('requerimiento.buscar')->with('find', $find)
                                                ->with('centro', $centro)

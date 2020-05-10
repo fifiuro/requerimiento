@@ -62,3 +62,8 @@ label {
 .img-logo {
     width: 55%;
 }
+
+.modal-header {
+    background-color: #17a2b8;
+    color: white;
+}

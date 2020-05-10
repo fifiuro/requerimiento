@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\requerimiento\Paso;
+use App\requerimiento\Requerimiento;
+use App\requerimiento\DatoPersonal;
+use App\configuracion\CentroSalud;
+use App\configuracion\Cargo;
+use App\configuracion\Nivel;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarPasoRequest;
 
@@ -13,23 +19,23 @@ class pasoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /* function __construct()
+    function __construct()
     {
-         $this->middleware('permission:contratos-list|contratos-create|contratos-edit|contratos-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:contratos-create', ['only' => ['create','store']]);
-         $this->middleware('permission:contratos-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:contratos-delete', ['only' => ['destroy']]);
-    } */
+         $this->middleware('permission:estadorequerimiento-edit|estadorequerimiento-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:estadorequerimiento-create', ['only' => ['create','store']]);
+         $this->middleware('permission:estadorequerimiento-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:estadorequerimiento-delete', ['only' => ['destroy']]);
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /* public function index()
     {
         return view('paso.buscar');
-    }
+    } */
 
     /**
      * Display the specified resource.
@@ -37,7 +43,7 @@ class pasoController extends Controller
      * @param  \App\configuracionPaso  $configuracionPaso
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    /* public function show(Request $request)
     {
         
         $find = Paso::where('contrato', 'like', '%'.$request->contrato.'%')->get();
@@ -51,16 +57,35 @@ class pasoController extends Controller
                                             ->with('estado', '0')
                                             ->with('mensaje', 'No se tiene resultado para la busqueda: '.$request->contrato);
         }
-    }
+    } */
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('contrato.nuevo');
+        $paso = Paso::where('id_req','=',$id)->get();
+        
+        $e = array();
+        foreach($paso as $p){
+            array_push($e,$p->estado);
+        }
+
+        $req = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
+                            ->join('centro_salud','centro_salud.id_cen','=','requerimientos.id_cen')
+                            ->join('cargos','cargos.id_car','=','requerimientos.id_car')
+                            ->join('niveles','niveles.id_niv','=','requerimientos.id_niv')
+                            ->join('departamentos','departamentos.id_dep','=','datos_personales.id_dep')
+                            ->join('contratos','contratos.id_con','=','requerimientos.id_con')
+                            ->select('requerimientos.id_req', 'datos_personales.nombre', 'datos_personales.paterno', 'datos_personales.materno', 'datos_personales.ci', 'departamentos.sigla as departamento', 'datos_personales.matricula', 'cargos.cargo', 'niveles.nivel', 'niveles.horas', 'niveles.tiempo', 'niveles.salario','centro_salud.nombre as centro_salud','contratos.contrato')
+                            ->where('requerimientos.id_req','=',$id)
+                            ->get();
+        
+        return view('paso.nuevo')->with('req',$req[0])
+                                 ->with('paso',$paso)
+                                 ->with('e', $e);
     }
 
     /**
@@ -69,33 +94,38 @@ class pasoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidarContratoRequest $request)
+    public function store(ValidarPasoRequest $request)
     {
-        $find = new Contrato;
+        $find = new Paso;
 
-        $find->contrato = $request->contrato;
+        $find->id_req = $request->id_req;
         $find->estado = $request->estado;
+        $find->id_usr = \Auth::user()->id;
+        $find->fecha = date("Y-m-d");
+        $find->hora = date("H:i:s");
+        $find->observaciones = $request->observaciones;
 
         $find->save();
 
         \toastr()->success('Se agrego correctamente el registro.');
 
-        return view('contrato.buscar');
+        /* return view('requerimiento.buscar'); */
+        return \redirect('pasos/nuevo/'.$request->id_req);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\configuracionContrato  $configuracionContrato
+     * @param  \App\requerimientoPaso  $configuracionPaso
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $find = Contrato::find($id);
+        $find = Paso::find($id);
         
         if(!is_null($find)){
-            return view('contrato.editar')->with('find', $find)
-                                              ->with('mensaje', '');
+            return view('paso.editar')->with('find', $find)
+                                          ->with('mensaje', '');
         }else{
             \toastr()->error('No se encontro el registro a Modificar.');
 
@@ -107,16 +137,19 @@ class pasoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\configuracionContrato  $configuracionContrato
+     * @param  \App\requerimientoPaso  $configuracionPaso
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidarContratoRequest $request)
+    public function update(ValidarPasoRequest $request)
     {
-        $find = Contrato::find($request->id_con);
+        $find = Paso::find($request->id_pas);
 
         if(!is_null($find)){
-            $find->contrato = $request->contrato;
             $find->estado = $request->estado;
+            $find->id_usr = \Auth::user()->id;
+            $find->fecha = date("Y-m-d");
+            $find->hora = date("H:i:s");
+            $find->observaciones = $request->observaciones;
 
             $find->save();
 
@@ -125,35 +158,36 @@ class pasoController extends Controller
             \toastr()->success('No se encontro el registro a Modificar.');
         }
 
-        return view('contrato.buscar');
+        return \redirect('pasos/nuevo/'.$find->id_req);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\configuracionContrato  $configuracionContrato
+     * @param  \App\requerimientoPaso  $configuracionPaso
      * @return \Illuminate\Http\Response
      */
     public function confirm($id)
     {
-        $find = Contrato::find($id);
+        $find = Paso::find($id);
 
         if(is_null($find)){
             \toastr()->success('No se encontro el registro a Eliminar.');
         }
 
-        return view('contrato.confirma')->with('id', $find->id_con);
+        return view('paso.confirma')->with('id', $find->id_pas)
+                                    ->with('id_req', $find->id_req);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\configuracionContrato  $configuracionContrato
+     * @param  \App\requerimientoPaso  $configuracionPaso
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $find = Contrato::find($request->id);
+        $find = Paso::find($request->id);
 
         if(!is_null($find)){
             $find->delete();
@@ -163,6 +197,6 @@ class pasoController extends Controller
             \toastr()->error('No se encontro el registro a Eliminar.');
         }
 
-        return view('contrato.buscar');
+        return \redirect('pasos/nuevo/'.$find->id_req);
     }
 }

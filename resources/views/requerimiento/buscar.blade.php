@@ -119,6 +119,10 @@
                                         <a href="{{ url('requerimiento/confirma/'.$f->id_req) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                        {{-- Boton para agregar Paso --}}
+                                        <a href="{{ url('pasos/nuevo/'.$f->id_req) }}" class="btn btn-success">
+                                            <i class="fas fa-retweet"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach

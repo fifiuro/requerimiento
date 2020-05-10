@@ -83,6 +83,11 @@ class PermissionTableSeeder extends Seeder
             'roles-edit',
             'roles-delete',
             'roles-confirma',
+            'estadorequerimiento-list',
+            'estadorequerimiento-create',
+            'estadorequerimiento-edit',
+            'estadorequerimiento-delete',
+            'estadorequerimiento-confirma',
 
         ];
 
