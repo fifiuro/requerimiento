@@ -90,7 +90,7 @@
               @can('departamento-list')
                 <li class="nav-item">
                   <a href="{{ url('departamento/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="far fa-building"></i>
                     <p>
                       Departamentos
                     </p>
@@ -100,7 +100,7 @@
               @can('estadocivil-list')
                 <li class="nav-item">
                   <a href="{{ url('estadocivil/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="fas fa-ring"></i>
                     <p>
                       Estado Civil
                     </p>
@@ -110,9 +110,9 @@
               @can('afp-list')
                 <li class="nav-item">
                   <a href="{{ url('afp/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="fas fa-donate"></i>
                     <p>
-                      afp
+                      AFP
                     </p>
                   </a>
                 </li>
@@ -120,7 +120,7 @@
               @can('centrosalud-list')
                 <li class="nav-item">
                   <a href="{{ url('centrosalud/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="far fa-hospital"></i>
                     <p>
                       Centro Salud
                     </p>
@@ -130,7 +130,7 @@
               @can('contratos-list')
                 <li class="nav-item">
                   <a href="{{ url('contrato/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="fas fa-file-contract"></i>
                     <p>
                       Contratos
                     </p>
@@ -140,7 +140,7 @@
               @can('documentos-list')
                 <li class="nav-item">
                   <a href="{{ url('documento/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="far fa-file-alt"></i>
                     <p>
                       Documentos
                     </p>
@@ -150,7 +150,7 @@
               @can('areacargo-list')
                 <li class="nav-item">
                   <a href="{{ url('area/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="fab fa-acquisitions-incorporated"></i>
                     <p>
                       Areas & Cargos
                     </p>
@@ -160,7 +160,7 @@
               @can('niveles-list')
                 <li class="nav-item">
                   <a href="{{ url('nivel/buscar') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="fas fa-layer-group"></i>
                     <p>
                       Niveles
                     </p>
@@ -173,7 +173,7 @@
               @can('users-list')
                 <li class="nav-item">
                   <a href="{{ url('users/buscar') }}" class="nav-link">
-                    <i class="nav-icon far fa-calendar-alt"></i>
+                    <i class="fas fa-users"></i>
                     <p>
                       Usuarios
                     </p>
@@ -183,7 +183,7 @@
               @can('role-list')
                 <li class="nav-item">
                   <a href="{{ url('roles/buscar') }}" class="nav-link">
-                    <i class="nav-icon far fa-calendar-alt"></i>
+                    <i class="fas fa-user-tag"></i>
                     <p>
                       Roles
                     </p>
@@ -196,7 +196,7 @@
               @can('datospersonal-list')
                 <li class="nav-item">
                   <a href="{{ url('personal/buscar') }}" class="nav-link">
-                    <i class="nav-icon far fa-calendar-alt"></i>
+                    <i class="fas fa-info-circle"></i>
                     <p>
                       Datos Personales
                     </p>
@@ -206,7 +206,7 @@
               @can('requerimiento-list')
                 <li class="nav-item">
                   <a href="{{ url('requerimiento/buscar') }}" class="nav-link">
-                    <i class="nav-icon far fa-image"></i>
+                    <i class="fas fa-check"></i>
                     <p>
                       Requerimiento
                     </p>
