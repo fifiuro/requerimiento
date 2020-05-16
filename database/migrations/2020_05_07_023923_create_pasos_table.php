@@ -28,7 +28,7 @@ class CreatePasosTable extends Migration
             $table->date('fecha');
             $table->time('hora');
             $table->string('observaciones');
-
+            $table->boolean('permite');
             $table->timestamps();
         });
     }

@@ -132,7 +132,7 @@
                   <a href="{{ url('contrato/buscar') }}" class="nav-link">
                     <i class="fas fa-file-contract"></i>
                     <p>
-                      Contratos
+                      Tipos Contratos
                     </p>
                   </a>
                 </li>
@@ -163,6 +163,16 @@
                     <i class="fas fa-layer-group"></i>
                     <p>
                       Niveles
+                    </p>
+                  </a>
+                </li>
+              @endcan
+              @can('niveles-list')
+                <li class="nav-item">
+                  <a href="{{ url('config_contratos/buscar') }}" class="nav-link">
+                    <i class="fas fa-user-tag"></i>
+                    <p>
+                      Impresion Contratos
                     </p>
                   </a>
                 </li>
@@ -272,7 +282,7 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('js/dashboard.js') }}"></script>
+{{--  <script src="{{ asset('js/dashboard.js') }}"></script>  --}}
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('js/demo.js') }}"></script>
 {{--  Libreria que nos permite realizar Notiticaciones  --}}
