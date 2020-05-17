@@ -123,6 +123,10 @@
                                         <a href="{{ url('pasos/nuevo/'.$f->id_req) }}" class="btn btn-success">
                                             <i class="fas fa-retweet"></i>
                                         </a>
+                                        {{-- Boton para Generar Contrato --}}
+                                        <a href="{{ url('imp_contrato/nuevo/'.$f->id_req) }}" class="btn btn-primary">
+                                            <i class="far fa-file-alt"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach

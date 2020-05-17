@@ -201,6 +201,18 @@ Route::group(['prefix' => 'config_contratos','middleware' => ['auth']], function
     Route::post('eliminar', 'ConfigContratoController@destroy');
 });
 
+// Rutas IMPRESION CONTRATOS
+Route::group(['prefix' => 'imp_contrato','middleware' => ['auth']], function(){
+    /* Route::get('buscar', 'imp_contratoController@index');
+    Route::post('buscar', 'imp_contratoController@show'); */
+    Route::get('nuevo/{id}', 'ImpresionContratoController@create');
+    Route::post('nuevo', 'ImpresionContratoController@store');
+    Route::get('editar/{id}', 'ImpresionContratoController@edit');
+    Route::post('actualizar', 'ImpresionContratoController@update');
+    Route::get('confirma/{id}', 'ImpresionContratoController@confirm');
+    Route::post('eliminar', 'ImpresionContratoController@destroy');
+});
+
 Auth::routes(["register" => false, "reset" => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
