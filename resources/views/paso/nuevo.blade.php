@@ -55,7 +55,9 @@
                         <th>Estado</th>
                         <th>Observaciones</th>
                         @can('estadorequerimiento-edit')
-                            <th>Acciones</th>
+                            @if($cerrar != 0)
+                                <th>Acciones</th>
+                            @endif
                         @endcan
                     </thead>
                     @foreach ($paso as $p)
@@ -80,23 +82,27 @@
                                 @if ($p->estado == 6)
                                     CONTRATO ANULADO
                                 @endif
-                                @if ($p->estado == 7)
+                                @if ($p->estado == 0)
                                     NUEVO REQUERIMIENTO
                                 @endif
                             </td>
                             <td>{{ $p->observaciones }}</td>
                             <td>
                                 {{-- Boton de Modificar --}}
-                                @can('estadorequerimiento-edit') 
-                                <a href="{{ url('pasos/editar/'.$p->id_pas) }}" class="btn btn-warning">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                @can('estadorequerimiento-edit')
+                                    @if($cerrar != 0)
+                                        <a href="{{ url('pasos/editar/'.$p->id_pas) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @endif
                                 @endcan 
                                 {{-- Boton de Eliminar --}}
-                                @can('estadorequerimiento-delete') 
-                                <a href="{{ url('pasos/confirma/'.$p->id_pas) }}" class="btn btn-danger">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
+                                @can('estadorequerimiento-delete')
+                                    @if($cerrar != 0)
+                                        <a href="{{ url('pasos/confirma/'.$p->id_pas) }}" class="btn btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    @endif
                                 @endcan 
                             </td>
                         </tr>
@@ -105,7 +111,9 @@
             </div>
             <div class="card-footer">
                 @can('estadorequerimiento-create')
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">AGREGAR ESTADO</button>
+                    @if($cerrar != 0)
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">AGREGAR ESTADO</button>
+                    @endif
                 @endcan
                 <a href="{{ url('requerimiento/buscar') }}" class="btn btn-danger">CERRAR</a>
             </div>
@@ -160,10 +168,10 @@
                                 @else
                                     <option value="6">CONTRATO ANULADO</option>
                                 @endif
-                                @if (in_array("7",$e))
+                                @if (in_array("0",$e))
                                     
                                 @else
-                                    <option value="7">NUEVO REQUERIMIENTO</option>
+                                    <option value="0">NUEVO REQUERIMIENTO</option>
                                 @endif
                             </select>
                             @if ($errors->has('estado'))

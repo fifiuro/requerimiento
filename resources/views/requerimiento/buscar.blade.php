@@ -21,8 +21,8 @@
                                     <option value="4">CONFIRMADO</option>
                                     <option value="5">HABILITADO</option>
                                     <option value="6">CONTRATO ANULADO</option>
-                                    <option value="7">NUEVO REQUERIMIENTO</option>
-                                    <option value="0">TODOS LOS ESTADOS</option>
+                                    <option value="0">NUEVO REQUERIMIENTO</option>
+                                    <option value="7">TODOS LOS ESTADOS</option>
                                 </select>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                                             @case(6)
                                                 CONTRATO ANULADO
                                                 @break
-                                            @case(7)
+                                            @case(0)
                                                 NUEVO REQUERIMIENTO
                                                 @break
                                             @default

@@ -29,6 +29,7 @@ class CreatePasosTable extends Migration
             $table->time('hora');
             $table->string('observaciones');
             $table->boolean('permite');
+            $table->boolean('llave');
             $table->timestamps();
         });
     }

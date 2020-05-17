@@ -37,7 +37,6 @@ class CreateRequerimientoTable extends Migration
             $table->string('nota_requerimiento');
             $table->date('fecha_nota_requerimiento');
             $table->string('observaciones');
-            $table->integer('estado')->default('1');
 
             $table->timestamps();
         });

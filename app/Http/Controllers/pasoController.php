@@ -69,8 +69,10 @@ class pasoController extends Controller
         $paso = Paso::where('id_req','=',$id)->get();
         
         $e = array();
+        $cerrar;
         foreach($paso as $p){
             array_push($e,$p->estado);
+            $cerrar = $p->permite;
         }
 
         $req = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
@@ -85,7 +87,8 @@ class pasoController extends Controller
         
         return view('paso.nuevo')->with('req',$req[0])
                                  ->with('paso',$paso)
-                                 ->with('e', $e);
+                                 ->with('e', $e)
+                                 ->with('cerrar',$cerrar);
     }
 
     /**
@@ -104,12 +107,22 @@ class pasoController extends Controller
         $find->fecha = date("Y-m-d");
         $find->hora = date("H:i:s");
         $find->observaciones = $request->observaciones;
+        $find->permite = true;
+        $find->llave = true;
 
         $find->save();
 
+        if($request->estado == 5){
+            $find = Paso::where('id_req','=',$request->id_req)
+                        ->update(['permite' => 0]);
+        }
+
+        $find = Paso::where('id_req','=',$request->id_req)
+                    ->where('estado','!=',$request->estado)
+                    ->update(['llave' => 0]);
+
         \toastr()->success('Se agrego correctamente el registro.');
 
-        /* return view('requerimiento.buscar'); */
         return \redirect('pasos/nuevo/'.$request->id_req);
     }
 

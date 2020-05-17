@@ -33,7 +33,7 @@ class datoPersonalController extends Controller
         if($request->data == '1'){
             $find = DatoPersonal::leftjoin('requerimientos','requerimientos.id_per','=','datos_personales.id_per')
                                 ->where(DB::raw('concat(datos_personales.nombre," ",datos_personales.paterno," ",datos_personales.materno)'), 'like', '%'.$request->nombre.'%')
-                                ->whereNull('requerimientos.estado')
+                                //->whereNull('requerimientos.estado')
                                 ->select('datos_personales.id_per','datos_personales.nombre','datos_personales.paterno','datos_personales.materno','datos_personales.telefono','datos_personales.celular','datos_personales.email')
                                 ->get();
         }else{
