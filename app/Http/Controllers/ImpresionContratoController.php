@@ -7,6 +7,7 @@ use App\configuracion\Config_contrato;
 use App\requerimiento\DatoPersonal;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarImpresionContratoRequest;
+use PDF;
 
 class ImpresionContratoController extends Controller
 {
@@ -132,6 +133,17 @@ class ImpresionContratoController extends Controller
     public function destroy(Impresion_contrato $impresion_contrato)
     {
         //
+    }
+
+    public function pdf($id) {
+        $find = Impresion_contrato::where('id_imp','=',$id)->select('contrato')->get();
+
+        $pdf = PDF::loadView('imp_contratos.imprimir', \compact('find'));
+
+        $pdf->setPaper('legal','portrait');
+
+        return $pdf->stream('contrato.pdf');
+        //return view('imp_contratos.imprimir',\compact('find'));
     }
 
     private function reemplazo($id) {

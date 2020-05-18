@@ -211,6 +211,8 @@ Route::group(['prefix' => 'imp_contrato','middleware' => ['auth']], function(){
     Route::post('actualizar', 'ImpresionContratoController@update');
     Route::get('confirma/{id}', 'ImpresionContratoController@confirm');
     Route::post('eliminar', 'ImpresionContratoController@destroy');
+
+    Route::get('pdf/{id}', 'ImpresionContratoController@pdf');
 });
 
 Auth::routes(["register" => false, "reset" => false]);

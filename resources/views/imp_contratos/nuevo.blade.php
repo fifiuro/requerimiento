@@ -88,9 +88,9 @@
                     
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">GUARDAR</button>
-                        <a href="{{ url('requerimiento/buscar') }}" class="btn btn-danger">CANCELAR</a>
                         <a href="{{ url('requerimiento/buscar') }}" class="btn btn-warning">VISTA PREVIA</a>
                         <a href="{{ url('requerimiento/buscar') }}" class="btn btn-warning">IMPRIMIR</a>
+                        <a href="{{ url('requerimiento/buscar') }}" class="btn btn-danger">CANCELAR</a>
                     </div>
                 </div>
             </form>
