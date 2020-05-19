@@ -89,8 +89,8 @@
                     
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">GUARDAR</button>
-                        <a href="{{ url('imp_contrato/pdf/'.$imp->id_imp) }}" class="btn btn-warning">VISTA PREVIA</a>
-                        <a href="{{ url('imp_contrato/pdf/'.$imp->id_imp) }}" target="_blank" class="btn btn-success">IMPRIMIR</a>
+                        <a href="{{ url('imp_contrato/pdf/'.$imp->id_imp) }}" target="_blanck" class="btn btn-warning">VISTA PREVIA</a>
+                        <a href="{{ url('imp_contrato/pdf/'.$imp->id_imp) }}" target="_blanck" class="btn btn-success">IMPRIMIR</a>
                         <a href="{{ url('requerimiento/buscar') }}" class="btn btn-danger">CANCELAR</a>
                     </div>
                 </div>

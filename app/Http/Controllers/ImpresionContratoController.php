@@ -142,7 +142,7 @@ class ImpresionContratoController extends Controller
 
         $pdf->setPaper('legal','portrait');
 
-        return $pdf->stream('contrato.pdf');
+        return $pdf->stream('contrato.pdf', array('Attachment' => true));
         //return view('imp_contratos.imprimir',\compact('find'));
     }
 
