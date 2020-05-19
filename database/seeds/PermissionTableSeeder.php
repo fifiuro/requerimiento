@@ -88,6 +88,10 @@ class PermissionTableSeeder extends Seeder
             'estadorequerimiento-edit',
             'estadorequerimiento-delete',
             'estadorequerimiento-confirma',
+            'impcontrato-list',
+            'impcontrato-create',
+            'impcontrato-edit',
+            'impcontrato-delete'
 
         ];
 

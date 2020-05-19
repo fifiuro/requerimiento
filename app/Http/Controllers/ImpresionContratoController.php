@@ -8,6 +8,7 @@ use App\requerimiento\DatoPersonal;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarImpresionContratoRequest;
 use PDF;
+use Illuminate\Support\Facades\Auth;
 
 class ImpresionContratoController extends Controller
 {
@@ -16,20 +17,36 @@ class ImpresionContratoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    function __construct()
     {
-        //
+         $this->middleware('permission:impcontrato-list|impcontrato-create|impcontrato-edit|impcontrato-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:impcontrato-create', ['only' => ['create','store']]);
+         $this->middleware('permission:impcontrato-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:impcontrato-delete', ['only' => ['destroy']]);
     }
-
+    
     /**
-     * Display the specified resource.
+     * Display a listing of the resource.
      *
-     * @param  \App\requerimiento\Impresion_contrato  $impresion_contrato
      * @return \Illuminate\Http\Response
      */
-    public function show(Impresion_contrato $impresion_contrato)
+    public function index($id)
     {
-        //
+        $imp = Impresion_contrato::where('id_req','=',$id)->get();
+        //dd(Auth::user()->hasRole('Admin'));
+        if(Auth::user()->hasRole('Admin')){
+            return view('imp_contratos.pregunta')->with('id',$imp[0]->id_imp);
+        }else{
+            if(count($imp) == 0){
+                return \redirect('imp_contrato/nuevo/'.$id);
+            }else{
+                if($imp[0]->modifica){
+                    return view('imp_contratos.pregunta')->with('id',$imp[0]->id_imp);
+                }else{
+                    return redirect('imp_contrato/pdf/'.$imp[0]->id_imp);
+                }
+            }
+        }
     }
 
     /**
@@ -39,15 +56,12 @@ class ImpresionContratoController extends Controller
      */
     public function create($id)
     {
-        $imp = Impresion_contrato::where('id_req','=',$id)->get();
-
-        if(count($imp) > 0){
-            return view('imp_contratos.editar')->with('id',$id)
-                                          ->with('contrato', $this->reemplazo($id))
-                                          ->with('imp', $imp[0]);
+        $imp = Config_contrato::where('estado','=',true)->get();
+        if(count($imp) == 0){
+            return "NO SE TIENE CONFIGURADO UN LA PLANTILLA DE CONTRATO, CONTACTESE CON EL ADMINISTRADOR PARA SOLUCIONAR EL PROBLEMA.";
         }else{
             return view('imp_contratos.nuevo')->with('id',$id)
-                                          ->with('contrato', $this->reemplazo($id));
+                                              ->with('contrato',$this->reemplazo($id));
         }
     }
 
@@ -74,10 +88,12 @@ class ImpresionContratoController extends Controller
 
         $find->save();
 
-        \toastr()->success('Se agrego correctamente el registro.');
+        $id = $find->id_imp;
 
-        return view('imp_contratos.nuevo')->with('id',$request->id_req)
-                                          ->with('contrato', $this->reemplazo($request->id_req));
+        \toastr()->success('Se agrego correctamente el registro.');
+        $imp = Impresion_contrato::find($id);
+        return view('imp_contratos.editar')->with('imp',$imp)
+                                           ->with('contrato', $this->reemplazo($request->id_req));
     }
 
     /**
@@ -86,9 +102,20 @@ class ImpresionContratoController extends Controller
      * @param  \App\requerimiento\Impresion_contrato  $impresion_contrato
      * @return \Illuminate\Http\Response
      */
-    public function edit(Impresion_contrato $impresion_contrato)
+    public function edit($id)
     {
-        //
+        $imp = Impresion_contrato::find($id);
+        if(Auth::user()->hasRole('Admin')){
+            return view('imp_contratos.editar')->with('imp',$imp)
+                                               ->with('contrato',$this->reemplazo($imp->id_req));
+        }else{
+            if($imp->modifica){
+                return view('imp_contratos.editar')->with('imp',$imp)
+                                               ->with('contrato',$this->reemplazo($imp->id_req));
+            }else{
+                return redirect('requerimiento/buscar');
+            }
+        }
     }
 
     /**
@@ -102,8 +129,6 @@ class ImpresionContratoController extends Controller
     {
         $find = Impresion_contrato::find($request->id_imp);
 
-        /* $find->id_req = $request->id_req; */
-        /* $find->correlativo = $this->correlativo(); */
         $find->contrato = $request->plantilla_contrato;
         $find->firma1 = $request->firma1;
         $find->cargo1 = $request->cargo1;
@@ -117,11 +142,25 @@ class ImpresionContratoController extends Controller
 
         \toastr()->success('Se agrego correctamente el registro.');
 
-        $imp = Impresion_contrato::where('id_req','=',$request->id_req)->get();
+        $imp = Impresion_contrato::find($request->id_imp);
 
-        return view('imp_contratos.editar')->with('id',$request->id_req)
-                                           ->with('contrato', $this->reemplazo($request->id_req))
+        return view('imp_contratos.editar')->with('contrato', $this->reemplazo($request->id_req))
                                            ->with('imp', $imp[0]);
+    }
+
+    public function pdf($id) {
+        $fin = Impresion_contrato::find($id);
+        $fin->modifica = false;
+        $fin->save();
+
+        $find = Impresion_contrato::where('id_imp','=',$id)->select('contrato')->get();
+
+        $pdf = PDF::loadView('imp_contratos.imprimir', \compact('find'));
+
+        $pdf->setPaper('legal','portrait');
+
+        return $pdf->stream('contrato.pdf');
+        //return view('imp_contratos.imprimir',\compact('find'));
     }
 
     /**
@@ -135,20 +174,15 @@ class ImpresionContratoController extends Controller
         //
     }
 
-    public function pdf($id) {
-        $find = Impresion_contrato::where('id_imp','=',$id)->select('contrato')->get();
-
-        $pdf = PDF::loadView('imp_contratos.imprimir', \compact('find'));
-
-        $pdf->setPaper('legal','portrait');
-
-        return $pdf->stream('contrato.pdf', array('Attachment' => true));
-        //return view('imp_contratos.imprimir',\compact('find'));
-    }
-
-    private function reemplazo($id) {
+    private function reemplazo($id) 
+    {
         $imp = Impresion_contrato::where('id_req','=',$id)->get();
-        $contrato = Config_contrato::where('estado','=',true)->select('plantilla_contrato')->get();
+        if(count($imp) == 0){
+            $contrato = Config_contrato::where('estado','=',true)->select('plantilla_contrato')->get();
+            $c = $contrato[0]->plantilla_contrato;
+        }else{
+            $c = $imp[0]->contrato;
+        }
         $trabajador = DatoPersonal::join('departamentos','departamentos.id_dep','=','datos_personales.id_dep')
                                   ->join('estado_civil','estado_civil.id_est','=','datos_personales.id_est')
                                   ->join('requerimientos','requerimientos.id_per','=','datos_personales.id_per')
@@ -173,7 +207,7 @@ class ImpresionContratoController extends Controller
                                   ->where('requerimientos.id_req','=',$id)
                                   ->get();
         
-        $otro = str_replace("Trabajador-nombre",$trabajador[0]->nombre,$contrato[0]->plantilla_contrato);
+        $otro = str_replace("Trabajador-nombre",$trabajador[0]->nombre,$c);
         $otro = str_replace("Trabajador-ci",$trabajador[0]->ci,$otro);
         $otro = str_replace("Trabajador-domicilio",$trabajador[0]->domicilio,$otro);
         $otro = str_replace("Trabajador-matricula",$trabajador[0]->matricula,$otro);
@@ -197,12 +231,24 @@ class ImpresionContratoController extends Controller
         return $otro;
     }
 
-    private function correlativo() {
+    private function correlativo() 
+    {
         $con = Config_contrato::where('estado','=',true)->get();
         $suma = $con[0]->correlativo + 1;
         
         $con1 = Config_contrato::where('estado','=',true)->update(['correlativo' => $suma]);
 
         return $con[0]->inicial.'-'.$suma.'/'.substr($con[0]->gestion,-2);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\requerimiento\Impresion_contrato  $impresion_contrato
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Impresion_contrato $impresion_contrato)
+    {
+        //
     }
 }

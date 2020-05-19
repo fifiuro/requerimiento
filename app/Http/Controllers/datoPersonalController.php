@@ -17,6 +17,19 @@ class datoPersonalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:datospersonal-list|datospersonal-create|datospersonal-edit|datospersonal-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:datospersonal-create', ['only' => ['create','store']]);
+         $this->middleware('permission:datospersonal-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:datospersonal-delete', ['only' => ['destroy','confirm']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('datoPersonal.buscar');

@@ -88,9 +88,7 @@
                     </div>
                     
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">GUARDAR</button>
-                        <a href="{{ url('imp_contrato/pdf/'.$imp->id_imp) }}" target="_blanck" class="btn btn-warning">VISTA PREVIA</a>
-                        <a href="{{ url('imp_contrato/pdf/'.$imp->id_imp) }}" target="_blanck" class="btn btn-success">IMPRIMIR</a>
+                        <button type="submit" class="btn btn-primary">GUARDAR CAMBIOS</button>
                         <a href="{{ url('requerimiento/buscar') }}" class="btn btn-danger">CANCELAR</a>
                     </div>
                 </div>
@@ -104,9 +102,7 @@ $('.textarea').summernote({
     height: 400,
     placeholder: 'Escriba el contenido del contrato',
     toolbar: [
-        ['style', ['bold']],
-        ['fontsize', ['fontsize','fontname']],
-        ['height', ['height']]
+        ['style', ['bold']]
     ]
 })
 @stop

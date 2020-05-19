@@ -203,8 +203,8 @@ Route::group(['prefix' => 'config_contratos','middleware' => ['auth']], function
 
 // Rutas IMPRESION CONTRATOS
 Route::group(['prefix' => 'imp_contrato','middleware' => ['auth']], function(){
-    /* Route::get('buscar', 'imp_contratoController@index');
-    Route::post('buscar', 'imp_contratoController@show'); */
+    Route::get('pregunta/{id}', 'ImpresionContratoController@index');
+    /* Route::post('buscar', 'imp_contratoController@show'); */
     Route::get('nuevo/{id}', 'ImpresionContratoController@create');
     Route::post('nuevo', 'ImpresionContratoController@store');
     Route::get('editar/{id}', 'ImpresionContratoController@edit');

@@ -49,9 +49,11 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 {{-- Boton de Nuevo --}}
-                                <a href="{{ url('requerimiento/nuevo') }}" class="btn btn-danger">
-                                    <i class="fas fa-plus"></i>
-                                </a>
+                                @can('requerimiento-create')
+                                    <a href="{{ url('requerimiento/nuevo') }}" class="btn btn-danger">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -112,19 +114,23 @@
                                     </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
-                                        <a href="{{ url('requerimiento/editar/'.$f->id_req) }}" class="btn btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        @can('requerimiento-edit')
+                                            <a href="{{ url('requerimiento/editar/'.$f->id_req) }}" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
-                                        <a href="{{ url('requerimiento/confirma/'.$f->id_req) }}" class="btn btn-danger">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        @can('requerimiento-delete', Model::class)
+                                            <a href="{{ url('requerimiento/confirma/'.$f->id_req) }}" class="btn btn-danger">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endcan
                                         {{-- Boton para agregar Paso --}}
                                         <a href="{{ url('pasos/nuevo/'.$f->id_req) }}" class="btn btn-success">
                                             <i class="fas fa-retweet"></i>
                                         </a>
                                         {{-- Boton para Generar Contrato --}}
-                                        <a href="{{ url('imp_contrato/nuevo/'.$f->id_req) }}" class="btn btn-primary">
+                                        <a href="{{ url('imp_contrato/pregunta/'.$f->id_req) }}" class="btn btn-primary">
                                             <i class="far fa-file-alt"></i>
                                         </a>
                                     </td>

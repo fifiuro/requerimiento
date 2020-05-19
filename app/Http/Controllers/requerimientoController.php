@@ -22,6 +22,19 @@ class requerimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:requerimiento-list|requerimiento-create|requerimiento-edit|requerimiento-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:requerimiento-create', ['only' => ['create','store']]);
+         $this->middleware('permission:requerimiento-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:requerimiento-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $centro = CentroSalud::where('estado','=',true)->get();

@@ -22,10 +22,12 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                {{-- Boton de Nuveo --}}
-                                <a href="{{ url('personal/nuevo') }}" class="btn btn-danger">
-                                    <i class="fas fa-plus"></i>
-                                </a>
+                                {{-- Boton de Nuevo --}}
+                                @can('datospersonal-create')
+                                    <a href="{{ url('personal/nuevo') }}" class="btn btn-danger">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -67,13 +69,17 @@
                                     <td>{{ $f->email }} </td>
                                     <td>
                                         {{-- Boton de Modificar --}}
-                                        <a href="{{ url('personal/editar/'.$f->id_per) }}" class="btn btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        @can('datospersonal-edit')
+                                            <a href="{{ url('personal/editar/'.$f->id_per) }}" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        @endcan
                                         {{-- Boton de Eliminar --}}
-                                        <a href="{{ url('personal/confirma/'.$f->id_per) }}" class="btn btn-danger">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        @can('datospersonal-delete')
+                                            <a href="{{ url('personal/confirma/'.$f->id_per) }}" class="btn btn-danger">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

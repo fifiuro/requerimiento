@@ -11,7 +11,7 @@
                 <input type="hidden" name="id_req" value="{{ $id }}">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="firma1">Firma 1 *</label>
@@ -73,8 +73,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-8">
-                            <div class="">
+                        <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="plantilla_contrato">Contrato</label>
                                 <textarea name="plantilla_contrato" id="plantilla_contrato" class="textarea">{{ $contrato }}</textarea>
                                 @if ($errors->has('gestion'))
@@ -85,7 +85,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">GUARDAR</button>
                         <a href="{{ url('requerimiento/buscar') }}" class="btn btn-danger">CANCELAR</a>
@@ -101,9 +100,7 @@ $('.textarea').summernote({
     height: 400,
     placeholder: 'Escriba el contenido del contrato',
     toolbar: [
-        ['style', ['bold']],
-        ['fontsize', ['fontsize','fontname']],
-        ['height', ['height']]
+        ['style', ['bold']]
     ]
 })
 @stop
