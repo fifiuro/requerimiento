@@ -89,7 +89,7 @@
                             <td>{{ $p->observaciones }}</td>
                             <td>
                                 {{-- Boton de Modificar --}}
-                                @can('estadorequerimiento-edit')
+                                @can('paso-edit')
                                     @if($cerrar != 0)
                                         <a href="{{ url('pasos/editar/'.$p->id_pas) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
@@ -97,7 +97,7 @@
                                     @endif
                                 @endcan 
                                 {{-- Boton de Eliminar --}}
-                                @can('estadorequerimiento-delete')
+                                @can('paso-delete')
                                     @if($cerrar != 0)
                                         <a href="{{ url('pasos/confirma/'.$p->id_pas) }}" class="btn btn-danger">
                                             <i class="far fa-trash-alt"></i>
@@ -110,7 +110,7 @@
                 </table>
             </div>
             <div class="card-footer">
-                @can('estadorequerimiento-create')
+                @can('paso-create')
                     @if($cerrar != 0)
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">AGREGAR ESTADO</button>
                     @endif
@@ -192,7 +192,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">CERRAR</button>
-                        @can('estadorequerimiento-create')
+                        @can('paso-create')
                             <button type="submit" class="btn btn-primary">GUARDAR</button>
                         @endcan
                     </div>

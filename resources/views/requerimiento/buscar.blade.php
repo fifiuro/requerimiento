@@ -126,13 +126,17 @@
                                             </a>
                                         @endcan
                                         {{-- Boton para agregar Paso --}}
-                                        <a href="{{ url('pasos/nuevo/'.$f->id_req) }}" class="btn btn-success">
-                                            <i class="fas fa-retweet"></i>
-                                        </a>
+                                        @can('paso-create')
+                                            <a href="{{ url('pasos/nuevo/'.$f->id_req) }}" class="btn btn-success">
+                                                <i class="fas fa-retweet"></i>
+                                            </a>
+                                        @endcan
                                         {{-- Boton para Generar Contrato --}}
-                                        <a href="{{ url('imp_contrato/pregunta/'.$f->id_req) }}" class="btn btn-primary">
-                                            <i class="far fa-file-alt"></i>
-                                        </a>
+                                        @can('impcontrato-create', Model::class)
+                                            <a href="{{ url('imp_contrato/pregunta/'.$f->id_req) }}" class="btn btn-primary">
+                                                <i class="far fa-file-alt"></i>
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

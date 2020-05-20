@@ -91,7 +91,11 @@ class PermissionTableSeeder extends Seeder
             'impcontrato-list',
             'impcontrato-create',
             'impcontrato-edit',
-            'impcontrato-delete'
+            'impcontrato-delete',
+            'paso-list',
+            'paso-create',
+            'paso-edit',
+            'paso-delete'
 
         ];
 

@@ -21,10 +21,10 @@ class pasoController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:estadorequerimiento-edit|estadorequerimiento-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:estadorequerimiento-create', ['only' => ['create','store']]);
-         $this->middleware('permission:estadorequerimiento-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:estadorequerimiento-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:paso-edit|paso-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:paso-create', ['only' => ['create','store']]);
+         $this->middleware('permission:paso-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:paso-delete', ['only' => ['destroy','confirm']]);
     }
 
     /**
