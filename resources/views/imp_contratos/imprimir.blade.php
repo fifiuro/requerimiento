@@ -10,11 +10,13 @@
             margin: 50px 50px;
         }
         /* #header { position: fixed; left: 0px; top: -60px; right: 0px; height: 40px; background-color: orange; text-align: center; } */
-        #footer { position: fixed; left: 0px; bottom: -40px; right: 0px; height: 40px; background-color: lightblue; }
+        /* #footer { position: fixed; left: 0px; bottom: -40px; right: 0px; height: 40px; background-color: lightblue; } */
+        #footer { position: fixed; left: 0px; bottom: -40px; right: 0px; height: 40px; }
         #footer .page:after { content: counter(page, upper-roman); }
 
         body {
             font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+            font-size: 13px;
         }
 
         .tabla {
@@ -44,8 +46,17 @@
         }
 
         .contrato {
-            font-size: 13px;
             text-align: justify;
+        }
+
+        .tabla-firma {
+            width: 715px;
+            text-align: center;
+        }
+
+        .col-firma {
+            height: 120px;
+            vertical-align: bottom;
         }
     </style>
 </head>
@@ -54,7 +65,7 @@
         RENE
     </div> --}}
     <div id="footer">
-        <p>CHRISTIAN</p>
+        <p></p>
     </div>
     <div id="content">
         <table class="tabla">
@@ -73,8 +84,33 @@
         </table>
         <hr>
         <span class="contrato">
-            <?php echo $find[0]->contrato ?>
+            {{--  <?php echo $find[0]->contrato ?>  --}}
+            {!! $find[0]->contrato !!}
         </span>
+        <table class="tabla-firma">
+            <tr>
+                <td class="col-firma">
+                    FIRMA TRABAJADOR
+                </td>
+                <td class="col-firma">
+                    {{ $find[0]->firma1 }}
+                    <br>
+                    <strong>{{ $find[0]->cargo1 }}</strong>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-firma">
+                    {{ $find[0]->firma2}}
+                    <br>
+                    <strong>{{ $find[0]->cargo2 }}</strong>
+                </td>
+                <td class="col-firma">
+                    {{ $find[0]->firma3 }}
+                    <br>
+                    <strong>{{ $find[0]->cargo3 }}</strong>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

@@ -109,7 +109,7 @@ class ImpresionContratoController extends Controller
             return view('imp_contratos.editar')->with('imp',$imp)
                                                ->with('contrato',$this->reemplazo($imp->id_req));
         }else{
-            if($imp->modifica){
+            if($imp->modifica($id)){
                 return view('imp_contratos.editar')->with('imp',$imp)
                                                ->with('contrato',$this->reemplazo($imp->id_req));
             }else{
@@ -153,7 +153,7 @@ class ImpresionContratoController extends Controller
         $fin->modifica = false;
         $fin->save();
 
-        $find = Impresion_contrato::where('id_imp','=',$id)->select('contrato')->get();
+        $find = Impresion_contrato::where('id_imp','=',$id)->get();
 
         $pdf = PDF::loadView('imp_contratos.imprimir', \compact('find'));
 
