@@ -34,6 +34,7 @@ class ImpresionContratoController extends Controller
     {
         $imp = Impresion_contrato::where('id_req','=',$id)->get();
         //dd(Auth::user()->hasRole('Admin'));
+        dd($imp);
         if(Auth::user()->hasRole('Admin')){
             return view('imp_contratos.pregunta')->with('id',$imp[0]->id_imp);
         }else{

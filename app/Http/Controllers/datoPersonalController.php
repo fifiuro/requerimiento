@@ -97,9 +97,10 @@ class datoPersonalController extends Controller
         $find->nombre = $request->nombre;
         $find->paterno = $request->paterno;
         $find->materno = $request->materno;
+        $find->fecha_nac = $request->fecha_nac;
         $find->ci = $request->ci;
         $find->id_dep = $request->id_dep;
-        $find->matricula = $request->matricula;
+        $find->matricula = $this->generar_matricula($request->nombre,$request->paterno,$request->materno,$request->fecha_nac);
         $find->id_est = $request->id_est;
         $find->domicilio = $request->domicilio;
         $find->id_afp = $request->id_afp;
@@ -155,6 +156,7 @@ class datoPersonalController extends Controller
             $find->nombre = $request->nombre;
             $find->paterno = $request->paterno;
             $find->materno = $request->materno;
+            $find->fecha_nac = $request->fecha_nac;
             $find->ci = $request->ci;
             $find->id_dep = $request->id_dep;
             $find->matricula = $request->matricula;
@@ -211,5 +213,27 @@ class datoPersonalController extends Controller
         }
 
         return view('datoPersonal.buscar');
+    }
+
+    private function generar_matricula($nom, $pat, $mat, $fn) {
+        $posi = true;
+        $cont = 1;
+        $n = substr($nom,0,1);
+        $p = substr($pat,0,1);
+        $m = substr($mat,0,1);
+        $fs = explode("-",$fn);
+        $mat = "MAT-".substr($fs[0],2,2).$fs[1].$fs[2].$p.$m.$n;
+
+        while($posi){
+            $personal = DatoPersonal::where('matricula','=',$mat)->get();
+            if(count($personal)>0){
+                $mat = $mat."-".$cont;
+                $cont = $cont + 1;
+            }else{
+                $posi = false;
+            }
+        }
+
+        return $mat;
     }
 }

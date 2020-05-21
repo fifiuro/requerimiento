@@ -76,7 +76,9 @@
                                     <th>Centro de Salud</th>
                                     <th>Nombre Completo</th>
                                     <th>Estado</th>
-                                    <th>Acciones</th>
+                                    @can(['requerimiento-edit','requerimiento-delete'])
+                                        <th>Acciones</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,9 +117,12 @@
                                     <td>
                                         {{-- Boton de Modificar --}}
                                         @can('requerimiento-edit')
-                                            <a href="{{ url('requerimiento/editar/'.$f->id_req) }}" class="btn btn-warning">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+                                            @if ($f->estado > 0)
+                                            @else
+                                                <a href="{{ url('requerimiento/editar/'.$f->id_req) }}" class="btn btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            @endif
                                         @endcan
                                         {{-- Boton de Eliminar --}}
                                         @can('requerimiento-delete', Model::class)
@@ -133,9 +138,11 @@
                                         @endcan
                                         {{-- Boton para Generar Contrato --}}
                                         @can('impcontrato-create', Model::class)
-                                            <a href="{{ url('imp_contrato/pregunta/'.$f->id_req) }}" class="btn btn-primary">
-                                                <i class="far fa-file-alt"></i>
-                                            </a>
+                                            @if ($f->estado == 5)
+                                                <a href="{{ url('imp_contrato/pregunta/'.$f->id_req) }}" class="btn btn-primary">
+                                                    <i class="far fa-file-alt"></i>
+                                                </a>
+                                            @endif
                                         @endcan
                                     </td>
                                 </tr>

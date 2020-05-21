@@ -18,6 +18,7 @@ class CreateDatosPersonalesTable extends Migration
             $table->string('nombre');
             $table->string('paterno');
             $table->string('materno');
+            $table->date("fecha_nac");
             $table->string('ci');
             // LLAVE FORANEA A LA TABLA DEPARTAMENTO
             $table->unsignedBigInteger('id_dep');

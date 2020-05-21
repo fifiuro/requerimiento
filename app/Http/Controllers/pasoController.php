@@ -67,14 +67,12 @@ class pasoController extends Controller
     public function create($id)
     {
         $paso = Paso::where('id_req','=',$id)->get();
-        
         $e = array();
         $cerrar;
         foreach($paso as $p){
             array_push($e,$p->estado);
             $cerrar = $p->permite;
         }
-
         $req = Requerimiento::join('datos_personales','datos_personales.id_per','=','requerimientos.id_per')
                             ->join('centro_salud','centro_salud.id_cen','=','requerimientos.id_cen')
                             ->join('cargos','cargos.id_car','=','requerimientos.id_car')
@@ -112,7 +110,7 @@ class pasoController extends Controller
 
         $find->save();
 
-        if($request->estado == 5){
+        if($request->estado == 5 or $request->estado == 2){
             $find = Paso::where('id_req','=',$request->id_req)
                         ->update(['permite' => 0]);
         }

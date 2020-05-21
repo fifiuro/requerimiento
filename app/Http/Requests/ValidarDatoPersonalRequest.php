@@ -27,9 +27,9 @@ class ValidarDatoPersonalRequest extends FormRequest
             'nombre' => 'required|min:1|max:100',
             'paterno' => 'required|min:1|max:100',
             'materno' => 'required|min:1|max:100',
+            'fecha_nac' => 'required',
             'ci' => 'required|min:1|max:20',
             'id_dep' => 'required|exists:departamentos,id_dep',
-            'matricula' => 'required|min:1|max:50',
             'id_est' => 'required|exists:estado_civil,id_est',
             'domicilio' => 'required|min:1|max:255',
             'id_afp' => 'required|exists:afp,id_afp',
@@ -54,16 +54,14 @@ class ValidarDatoPersonalRequest extends FormRequest
             'materno.min' => 'El :attribute debe contener más de una letra.',
             'materno.max' => 'El :attribute debe contener máximo 100 letras.',
 
+            'fecha_nac' => 'La :attribute es obligatorio.',
+
             'ci.required' => 'El :attribute es obligatorio.',
             'ci.min' => 'El :attribute debe contener más de un número.',
             'ci.max' => 'El :attribute debe contener máximo 20 numeros.',
 
             'id_dep' => 'El :attribute es obligatorio.',
             'id_dep' => 'El :attribute debe estar registrado.',
-
-            'matricula.required' => 'El :attribute es obligatorio.',
-            'matricula.min' => 'El :attribute debe contener más de un caracter.',
-            'matricula.max' => 'El :attribute debe contener máximo 50 caracteres.',
 
             'id_est' => 'El :attribute es obligatorio.',
             'id_est' => 'El :attribute debe estar registrado.',
@@ -96,9 +94,9 @@ class ValidarDatoPersonalRequest extends FormRequest
             'nombre' => 'Nombre(s)',
             'paterno' => 'Apellido Paterno',
             'materno' => 'Apellidos Materno',
+            'fecha_nac' => 'Fecha Nacimiento',
             'ci' => 'CI',
             'id_dep' => 'Departamento',
-            'matricula' => 'Matricula',
             'id_est' => 'Estado Civil',
             'domicilio' => 'Doimicilio',
             'id_afp' => 'AFP',

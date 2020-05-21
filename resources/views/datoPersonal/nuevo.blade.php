@@ -61,12 +61,21 @@
                                 </small>
                             @endif
                         </div>
-                        <div class="form-group col-md-4">
+                        {{--  <div class="form-group col-md-4">
                             <label for="matricula">Matricula *</label>
                             <input type="text" name="matricula" class="form-control" id="matricula" placeholder="Escriba Matricula" value="{{ old('matricula') }}" maxlength="50" required>
                             @if ($errors->has('matricula'))
                                 <small class="form-text text-danger">
                                     {{ $errors->first('matricula') }}
+                                </small>
+                            @endif
+                        </div>  --}}
+                        <div class="form-group col-md-4">
+                            <label for="fecha_nac">Fecha de Nacimiento *</label>
+                            <input type="date" name="fecha_nac" class="form-control" id="fecha_nac" placeholder="Escriba Fecha de Nacimiento" value="{{ old('fecha_nac') }}" maxlength="50" required>
+                            @if ($errors->has('fecha_nac'))
+                                <small class="form-text text-danger">
+                                    {{ $errors->first('fecha_nac') }}
                                 </small>
                             @endif
                         </div>

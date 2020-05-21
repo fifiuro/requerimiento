@@ -16,6 +16,7 @@ class CreateDatosPersonalSeeder extends Seeder
             'nombre' => 'NN',
             'paterno' => 'NN',
             'materno' => 'NN',
+            'fecha_nac' => '2020-01-01',
             'ci' => '0',
             'id_dep' => '1',
             'matricula' => '0',
